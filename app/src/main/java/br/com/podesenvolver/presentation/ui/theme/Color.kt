@@ -1,4 +1,4 @@
-package br.com.podesenvolver.ui.theme
+package br.com.podesenvolver.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
