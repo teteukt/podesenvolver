@@ -1,5 +1,6 @@
 package br.com.podesenvolver.presentation.rssFeed
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.podesenvolver.data.network.repository.PodcastRepository
@@ -11,20 +12,24 @@ import kotlinx.coroutines.launch
 
 class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewModel() {
 
+    val rssUrlText = mutableStateOf("")
+
     private val _rssFeedUiState = MutableStateFlow<RSSFeedUIState>(RSSFeedUIState.Initial)
     val rssFeedUiState: StateFlow<RSSFeedUIState> = _rssFeedUiState
 
-    fun fetchPodcast(url: String) {
+    fun shouldEnableSearchButton() = rssFeedUiState.value != RSSFeedUIState.Loading
+
+    fun fetchPodcast() {
         _rssFeedUiState.value = RSSFeedUIState.Loading
 
         viewModelScope.launch {
-            podcastRepository.getPodcast(url)
-                .catch { _rssFeedUiState.value = RSSFeedUIState.Error(it) }
-                .collect { podcast: Podcast? ->
-                    podcast?.let {
+            podcastRepository.getPodcast(rssUrlText.value)
+                .catch {
+                    _rssFeedUiState.value = RSSFeedUIState.Error(it)
+                }
+                .collect { podcast ->
+                    podcast.let {
                         _rssFeedUiState.value = RSSFeedUIState.Success(it)
-                    } ?: run {
-                        _rssFeedUiState.value = RSSFeedUIState.NotFound
                     }
                 }
         }

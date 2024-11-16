@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class PodcastRepositoryImpl(private val podcastDataSource: PodcastDataSource) : PodcastRepository {
-    override suspend fun getPodcast(url: String): Flow<Podcast?> =
-        podcastDataSource.getPodcast(url).map { it?.toDomain() }
+    override suspend fun getPodcast(url: String): Flow<Podcast> =
+        podcastDataSource.getPodcast(url).map { it.toDomain() }
 }

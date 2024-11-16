@@ -7,5 +7,5 @@ import retrofit2.http.Url
 interface PodcastApi {
 
     @GET
-    suspend fun getPodcastRss(@Url url: String): PodcastRssResponse?
+    suspend fun getPodcastRss(@Url url: String): PodcastRssResponse
 }

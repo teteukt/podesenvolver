@@ -6,6 +6,6 @@ import org.simpleframework.xml.Root
 @Root(name = "rss", strict = false)
 data class PodcastRssResponse(
 
-    @Element(name = "channel")
+    @field:Element(name = "channel")
     val channel: ChannelResponse
 )

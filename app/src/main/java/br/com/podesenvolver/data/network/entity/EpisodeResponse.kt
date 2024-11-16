@@ -5,6 +5,6 @@ import org.simpleframework.xml.Root
 
 @Root(name = "item", strict = false)
 data class EpisodeResponse(
-    @Element(name = "itunes:title")
+    @field:Element(name = "itunes:title")
     val title: String
 )
