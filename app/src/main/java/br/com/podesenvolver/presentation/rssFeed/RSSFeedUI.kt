@@ -1,8 +1,10 @@
 package br.com.podesenvolver.presentation.rssFeed
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -13,26 +15,65 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import br.com.podesenvolver.presentation.podcastDetail.PodcastActivity
 import br.com.podesenvolver.presentation.ui.theme.PodesenvolverTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun RSSFeedUI(viewModel: RSSFeedViewModel = koinViewModel()) {
+fun RSSFeedUI(
+    viewModel: RSSFeedViewModel = koinViewModel()
+) {
     var rssUrlText by remember { viewModel.rssUrlText }
-    val rssFeedUIState = viewModel.rssFeedUiState.collectAsState()
+    var alertError by remember { viewModel.actionError }
+    val state by viewModel.event.collectAsState()
+
+    @Composable
+    fun handleActionErrorAlert() {
+        alertError?.let { error ->
+            val title = when (error) {
+                RSSFeedViewModel.ActionError.Generic -> "Erro desconhecido"
+                RSSFeedViewModel.ActionError.Parse -> "Conteúdo desconhecido"
+            }
+
+            val text = when (error) {
+                RSSFeedViewModel.ActionError.Generic -> "Aconteceu um erro não previsto. Revise a URL e tente novamente."
+                RSSFeedViewModel.ActionError.Parse -> "O conteúdo entregue pela URL digitada não pôde ser lido corretamente. Revise a URL e tente novamente."
+            }
+
+            AlertDialogActionError(onDismiss = { alertError = null }, title = title, text = text)
+        }
+    }
+
+    (state as? RSSFeedViewModel.Event.RedirectToPodcast)?.let {
+        StartPodcastActivity(it.url)
+    }
 
     PodesenvolverTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            handleActionErrorAlert()
             Column(modifier = Modifier.padding(innerPadding)) {
                 TextField(value = rssUrlText, onValueChange = { rssUrlText = it })
                 Button(onClick = {
                     viewModel.fetchPodcast()
-                }, enabled = viewModel.shouldEnableSearchButton()) { Text("Buscar") }
-
-                (rssFeedUIState.value as? RSSFeedViewModel.RSSFeedUIState.Error)?.let {
-                    Text(it.exception.message.orEmpty())
-                }
+                }, enabled = viewModel.isLoading().not()) { Text("Buscar") }
             }
         }
     }
+}
+
+@Composable
+private fun AlertDialogActionError(onDismiss: () -> Unit, title: String, text: String) {
+    AlertDialog(onDismissRequest = onDismiss, confirmButton = {
+        Button(onClick = onDismiss) { Text("Fechar") }
+    }, title = { Text(title) }, text = { Text(text) })
+}
+
+@Composable
+private fun StartPodcastActivity(rssPodcastUrl: String) {
+    val context = LocalContext.current
+
+    context.startActivity(Intent(context, PodcastActivity::class.java).apply {
+        putExtra("EXTRA_URL", rssPodcastUrl)
+    })
 }
