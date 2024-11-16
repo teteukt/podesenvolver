@@ -1,5 +1,6 @@
 package br.com.podesenvolver.presentation.rssFeed
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.util.logging.Level
+import java.util.logging.Logger
 import javax.xml.stream.XMLStreamException
 
 class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewModel() {
@@ -23,13 +26,17 @@ class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewM
         val rssPodcastUrl = rssUrlText.value
 
         viewModelScope.launch {
-            podcastRepository.getPodcast(rssPodcastUrl)
-                .catch { handleGetPodcastError(it) }
-                .collect { _event.value = Event.RedirectToPodcast(rssPodcastUrl) }
+            try {
+                podcastRepository.getPodcast(rssPodcastUrl)
+                _event.value = Event.RedirectToPodcast(rssPodcastUrl)
+            } catch(error: Throwable) {
+                handleGetPodcastError(error)
+            }
         }
     }
 
     private fun handleGetPodcastError(throwable: Throwable) {
+        Log.e("Podesenvolver", throwable.message, throwable)
         _event.value = when(throwable) {
             is XMLStreamException -> {
                 actionError.value = ActionError.Parse

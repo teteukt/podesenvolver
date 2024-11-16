@@ -9,8 +9,8 @@ lifecycleRuntimeKtx = "2.6.1"
 activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 koin = "3.2.0"
-retrofit = "2.11.0"
-converterSimplexml = "2.11.0"
+ktorClient = "3.0.1"
+ktRssReader = "v2.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,8 +28,12 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-simplexml = { group = "com.squareup.retrofit2", name = "converter-simplexml", version.ref = "converterSimplexml" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClient" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClient" }
+ktor-serialization-xml = { module = "io.ktor:ktor-serialization-kotlinx-xml", version.ref = "ktorClient" }
+ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClient" }
+ktrssreader = { group = "com.github.ivanisidrowu.KtRssReader", name = "kotlin", version.ref = "ktRssReader" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
