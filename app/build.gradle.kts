@@ -58,5 +58,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.koin)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.jaxb)
+    implementation(libs.retrofit.simplexml)
 }

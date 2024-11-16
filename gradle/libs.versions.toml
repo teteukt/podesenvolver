@@ -10,7 +10,7 @@ activityCompose = "1.8.0"
 composeBom = "2024.04.01"
 koin = "3.2.0"
 retrofit = "2.11.0"
-retrofitJaxb = "2.7.1"
+converterSimplexml = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,7 +29,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 koin = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-jaxb = { group = "com.squareup.retrofit2", name = "converter-jaxb", version.ref = "retrofitJaxb" }
+retrofit-simplexml = { group = "com.squareup.retrofit2", name = "converter-simplexml", version.ref = "converterSimplexml" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
