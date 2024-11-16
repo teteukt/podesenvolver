@@ -7,6 +7,9 @@ class RetrofitConfig {
 
     companion object {
         fun createPodcastApi(): PodcastApi = Retrofit.Builder()
+            .addConverterFactory(
+                SimpleXmlConverterFactory.create()
+            )
             .build()
             .create(PodcastApi::class.java)
     }
