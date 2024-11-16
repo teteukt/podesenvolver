@@ -1,4 +1,4 @@
-package br.com.podesenvolver.presentation
+package br.com.podesenvolver.presentation.rssFeed
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,35 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.podesenvolver.presentation.ui.theme.PodesenvolverTheme
 
-class MainActivity : ComponentActivity() {
+class RSSFeedActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PodesenvolverTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            RSSFeedUI()
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PodesenvolverTheme {
-        Greeting("Android")
     }
 }
