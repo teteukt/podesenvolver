@@ -4,5 +4,6 @@ import br.com.podesenvolver.data.network.entity.EpisodeResponse
 import br.com.podesenvolver.domain.Episode
 
 fun EpisodeResponse.toDomain(): Episode = Episode(
-    title = this.title
+    title = this.title.orEmpty(),
+    description = this.description.orEmpty()
 )

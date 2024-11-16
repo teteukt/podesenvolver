@@ -4,5 +4,6 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
 data class Episode(
-    val title: String
+    val title: String,
+    val description: String
 )
