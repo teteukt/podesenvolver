@@ -7,11 +7,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import java.util.logging.Level
-import java.util.logging.Logger
-import javax.xml.stream.XMLStreamException
 
 class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewModel() {
 
@@ -38,7 +34,7 @@ class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewM
     private fun handleGetPodcastError(throwable: Throwable) {
         Log.e("Podesenvolver", throwable.message, throwable)
         _event.value = when(throwable) {
-            is XMLStreamException -> {
+            is IllegalArgumentException -> {
                 actionError.value = ActionError.Parse
                 Event.ParseError
             }

@@ -64,4 +64,6 @@ dependencies {
     implementation(libs.ktor.serialization.json)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktrssreader)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
