@@ -1,5 +1,7 @@
 package br.com.podesenvolver.data.network.repository
 
+import br.com.podesenvolver.domain.Podcast
+
 interface PodcastRepository {
-    suspend fun getPodcastRssEpisodes()
+    suspend fun getPodcast(url: String): Podcast?
 }
