@@ -6,5 +6,6 @@ import tw.ktrssreader.kotlin.model.item.ITunesItemData
 fun ITunesItemData.toDomain() = Episode(
     id = this.guid?.value.orEmpty(),
     title = this.title.orEmpty(),
-    description = this.description.orEmpty()
+    description = this.description.orEmpty(),
+    enclosure = this.enclosure?.toDomain() ?: EMPTY_ENCLOSURE
 )
