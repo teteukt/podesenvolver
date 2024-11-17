@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.podcastDetail.PodcastDetailActivity"/>
+        <activity android:name=".presentation.episode.EpisodeActivity"/>
     </application>
 
 </manifest>
