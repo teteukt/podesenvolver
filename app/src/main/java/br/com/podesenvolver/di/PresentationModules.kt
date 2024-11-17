@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val presentationModules = module {
     viewModel { RSSFeedViewModel(get(), get()) }
     viewModel { PodcastDetailViewModel(get()) }
-    viewModel { EpisodeViewModel(get()) }
+    viewModel { EpisodeViewModel(get(), get()) }
 }

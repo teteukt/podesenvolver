@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.js.inline.clean.removeUnusedImports
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -76,4 +74,8 @@ dependencies {
     implementation(libs.ktrssreader)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.media3.session)
 }
