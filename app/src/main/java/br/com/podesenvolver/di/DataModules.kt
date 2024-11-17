@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val dataModules = module {
     single { KtorClientConfig.config() }
     single { PodcastDataSource(get()) }
-    single { LocalPodcastDataSource() }
+    single { LocalPodcastDataSource }
     single { MediaProvider.createExoPlayer(androidApplication()) }
     factory<PodcastRepository> { PodcastRepositoryImpl(get()) }
     factory<LocalPodcastRepository> { LocalPodcastRepositoryImpl(get()) }

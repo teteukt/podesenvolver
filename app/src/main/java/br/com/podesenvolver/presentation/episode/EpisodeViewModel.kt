@@ -1,9 +1,13 @@
 package br.com.podesenvolver.presentation.episode
 
+import androidx.annotation.OptIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Episode
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +23,7 @@ class EpisodeViewModel(
     val episode: StateFlow<Event> = _episode
 
     fun releasePlayer() {
-        exoPlayer.release()
+        exoPlayer.stop()
     }
 
     fun fetchEpisodeDataById(id: String) {
@@ -27,14 +31,25 @@ class EpisodeViewModel(
 
         viewModelScope.launch {
             repository.getEpisodeFromSelectedPodcastById(id)?.let {
-                exoPlayer.setMediaItem(MediaItem.fromUri(it.enclosure.audioUrl))
-                exoPlayer.prepare()
-                exoPlayer.play()
+                prepareEpisode(it)
+                playEpisode()
                 _episode.value = Event.WithEpisode(it)
             } ?: run {
                 _episode.value = Event.NotFound
             }
         }
+    }
+
+    @OptIn(UnstableApi::class)
+    private fun prepareEpisode(episode: Episode) {
+        val mediaSource = ProgressiveMediaSource.Factory(DefaultHttpDataSource.Factory())
+            .createMediaSource(MediaItem.fromUri(episode.enclosure.audioUrl))
+        exoPlayer.setMediaSource(mediaSource)
+        exoPlayer.prepare()
+    }
+
+    private fun playEpisode() {
+        exoPlayer.play()
     }
 
     sealed class Event {

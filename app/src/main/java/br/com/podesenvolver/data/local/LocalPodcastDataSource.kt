@@ -3,7 +3,7 @@ package br.com.podesenvolver.data.local
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
 
-class LocalPodcastDataSource {
+object LocalPodcastDataSource {
     var selectedPodcast: Podcast? = null
         private set
 
