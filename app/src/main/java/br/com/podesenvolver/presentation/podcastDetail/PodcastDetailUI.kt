@@ -15,10 +15,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
+import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
 import br.com.podesenvolver.presentation.PodesenvolverTheme
+import br.com.podesenvolver.presentation.intentEpisode
 import coil3.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,7 +41,10 @@ fun PodcastDetailUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: Pod
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             Box(Modifier.padding(innerPadding)) {
                 when(val screenState = state) {
-                    is PodcastDetailViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast)
+                    is PodcastDetailViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast) {
+                        viewModel.selectEpisode(it)
+                    }
+                    is PodcastDetailViewModel.Event.SelectedEpisode -> StartEpisodeActivity(screenState.episode)
                     else -> UILoading()
                 }
             }
@@ -47,7 +53,8 @@ fun PodcastDetailUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: Pod
 }
 
 @Composable
-private fun UIWithPodcast(podcast: Podcast) {
+private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
+
     LazyColumn {
         item {
             AsyncImage(podcast.imageUrl, "")
@@ -74,12 +81,19 @@ private fun UIWithPodcast(podcast: Podcast) {
 
         items(podcast.episodes) {
             Column(Modifier.clickable {
-                // Redirecionar para media player
+                onClickEpisode(it)
             }) {
                 Text(it.title)
                 Text(AnnotatedString.fromHtml(it.description))
             }
         }
+    }
+}
+
+@Composable
+private fun StartEpisodeActivity(episode: Episode) {
+    with(LocalContext.current) {
+        startActivity(intentEpisode(episode.id))
     }
 }
 
