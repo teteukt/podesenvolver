@@ -25,7 +25,7 @@ class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewM
             try {
                 podcastRepository.getPodcast(rssPodcastUrl)
                 _event.value = Event.RedirectToPodcast(rssPodcastUrl)
-            } catch(error: Throwable) {
+            } catch (error: Throwable) {
                 handleGetPodcastError(error)
             }
         }
@@ -33,7 +33,7 @@ class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewM
 
     private fun handleGetPodcastError(throwable: Throwable) {
         Log.e("Podesenvolver", throwable.message, throwable)
-        _event.value = when(throwable) {
+        _event.value = when (throwable) {
             is IllegalArgumentException -> {
                 actionError.value = ActionError.Parse
                 Event.ParseError
@@ -53,7 +53,7 @@ class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewM
 
     sealed class Event {
         data object Initial : Event()
-        data class RedirectToPodcast(val url: String): Event()
+        data class RedirectToPodcast(val url: String) : Event()
         data object ParseError : Event()
         data object GenericError : Event()
         data object Loading : Event()

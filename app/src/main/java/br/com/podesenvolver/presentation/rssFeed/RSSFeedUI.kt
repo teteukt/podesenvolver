@@ -1,6 +1,5 @@
 package br.com.podesenvolver.presentation.rssFeed
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import br.com.podesenvolver.presentation.podcastDetail.PodcastDetailActivity
 import br.com.podesenvolver.presentation.PodesenvolverTheme
 import br.com.podesenvolver.presentation.intentPodcastDetail
 import org.koin.androidx.compose.koinViewModel

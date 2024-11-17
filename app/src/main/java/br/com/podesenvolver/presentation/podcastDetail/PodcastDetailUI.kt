@@ -40,7 +40,7 @@ fun PodcastDetailUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: Pod
     PodesenvolverTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             Box(Modifier.padding(innerPadding)) {
-                when(val screenState = state) {
+                when (val screenState = state) {
                     is PodcastDetailViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast) {
                         viewModel.selectEpisode(it)
                     }
@@ -54,7 +54,6 @@ fun PodcastDetailUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: Pod
 
 @Composable
 private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
-
     LazyColumn {
         item {
             AsyncImage(podcast.imageUrl, "")
@@ -80,9 +79,11 @@ private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
         }
 
         items(podcast.episodes) {
-            Column(Modifier.clickable {
-                onClickEpisode(it)
-            }) {
+            Column(
+                Modifier.clickable {
+                    onClickEpisode(it)
+                }
+            ) {
                 Text(it.title)
                 Text(AnnotatedString.fromHtml(it.description))
             }

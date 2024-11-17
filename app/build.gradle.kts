@@ -1,8 +1,18 @@
+import org.jetbrains.kotlin.js.inline.clean.removeUnusedImports
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
+    id("com.diffplug.spotless") version "6.12.0"
+}
+
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+        ktlint()
+    }
 }
 
 android {

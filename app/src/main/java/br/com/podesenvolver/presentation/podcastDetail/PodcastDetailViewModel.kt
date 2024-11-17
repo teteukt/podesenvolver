@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PodcastDetailViewModel(private val podcastRepository: PodcastRepository): ViewModel() {
+class PodcastDetailViewModel(private val podcastRepository: PodcastRepository) : ViewModel() {
 
     private val _event = MutableStateFlow<Event>(Event.Loading)
     val event: StateFlow<Event> = _event
@@ -20,7 +20,7 @@ class PodcastDetailViewModel(private val podcastRepository: PodcastRepository): 
         viewModelScope.launch {
             try {
                 _event.value = Event.WithPodcastData(podcastRepository.getPodcast(url))
-            } catch(error: Throwable) {
+            } catch (error: Throwable) {
                 _event.value = Event.Error
             }
         }
@@ -31,9 +31,9 @@ class PodcastDetailViewModel(private val podcastRepository: PodcastRepository): 
     }
 
     sealed class Event {
-        data object Loading: Event()
-        data object Error: Event()
-        data class WithPodcastData(val podcast: Podcast): Event()
-        data class SelectedEpisode(val episode: Episode): Event()
+        data object Loading : Event()
+        data object Error : Event()
+        data class WithPodcastData(val podcast: Podcast) : Event()
+        data class SelectedEpisode(val episode: Episode) : Event()
     }
 }
