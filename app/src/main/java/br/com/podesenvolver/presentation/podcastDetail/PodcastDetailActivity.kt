@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 
-class PodcastActivity : ComponentActivity() {
+class PodcastDetailActivity : ComponentActivity() {
 
     private val rssPodcastUrl: String? by lazy { intent?.extras?.getString("EXTRA_URL") }
 
@@ -13,7 +13,7 @@ class PodcastActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            PodcastUI(rssPodcastUrl, { finish() })
+            PodcastDetailUI(rssPodcastUrl, { finish() })
         }
     }
 }

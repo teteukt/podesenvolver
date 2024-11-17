@@ -23,8 +23,8 @@ import coil3.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun PodcastUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: PodcastViewModel = koinViewModel()) {
-    val state: PodcastViewModel.Event by viewModel.event.collectAsState()
+fun PodcastDetailUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: PodcastDetailViewModel = koinViewModel()) {
+    val state: PodcastDetailViewModel.Event by viewModel.event.collectAsState()
 
     LaunchedEffect("init") {
         url?.let { url ->
@@ -38,7 +38,7 @@ fun PodcastUI(url: String?, onDetectInvalidUrl: () -> Unit, viewModel: PodcastVi
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             Box(Modifier.padding(innerPadding)) {
                 when(val screenState = state) {
-                    is PodcastViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast)
+                    is PodcastDetailViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast)
                     else -> UILoading()
                 }
             }

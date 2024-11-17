@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import br.com.podesenvolver.presentation.podcastDetail.PodcastActivity
+import br.com.podesenvolver.presentation.podcastDetail.PodcastDetailActivity
 import br.com.podesenvolver.presentation.ui.theme.PodesenvolverTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -73,7 +73,7 @@ private fun AlertDialogActionError(onDismiss: () -> Unit, title: String, text: S
 private fun StartPodcastActivity(rssPodcastUrl: String) {
     val context = LocalContext.current
 
-    context.startActivity(Intent(context, PodcastActivity::class.java).apply {
+    context.startActivity(Intent(context, PodcastDetailActivity::class.java).apply {
         putExtra("EXTRA_URL", rssPodcastUrl)
     })
 }

@@ -5,12 +5,11 @@ import androidx.lifecycle.viewModelScope
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
-import br.com.podesenvolver.presentation.rssFeed.RSSFeedViewModel.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PodcastViewModel(private val podcastRepository: PodcastRepository): ViewModel() {
+class PodcastDetailViewModel(private val podcastRepository: PodcastRepository): ViewModel() {
 
     private val _event = MutableStateFlow<Event>(Event.Loading)
     val event: StateFlow<Event> = _event
