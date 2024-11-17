@@ -17,7 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import br.com.podesenvolver.presentation.podcastDetail.PodcastDetailActivity
-import br.com.podesenvolver.presentation.ui.theme.PodesenvolverTheme
+import br.com.podesenvolver.presentation.PodesenvolverTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

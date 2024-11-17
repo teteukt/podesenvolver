@@ -1,4 +1,4 @@
-package br.com.podesenvolver.presentation.ui.theme
+package br.com.podesenvolver.presentation
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

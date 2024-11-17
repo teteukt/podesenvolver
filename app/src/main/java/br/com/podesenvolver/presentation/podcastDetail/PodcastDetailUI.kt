@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
 import br.com.podesenvolver.domain.Podcast
-import br.com.podesenvolver.presentation.ui.theme.PodesenvolverTheme
+import br.com.podesenvolver.presentation.PodesenvolverTheme
 import coil3.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 
