@@ -12,9 +12,14 @@ class PodcastDetailActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(rssPodcastUrl == null) {
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         setContent {
-            PodcastDetailUI(rssPodcastUrl, { finish() })
+            PodcastDetailUI()
         }
     }
 }

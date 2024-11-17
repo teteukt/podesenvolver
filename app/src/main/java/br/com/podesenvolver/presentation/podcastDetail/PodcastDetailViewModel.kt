@@ -2,25 +2,31 @@ package br.com.podesenvolver.presentation.podcastDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.podesenvolver.data.network.repository.PodcastRepository
+import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PodcastDetailViewModel(private val podcastRepository: PodcastRepository) : ViewModel() {
+class PodcastDetailViewModel(private val localPodcastRepository: LocalPodcastRepository) : ViewModel() {
 
     private val _event = MutableStateFlow<Event>(Event.Loading)
     val event: StateFlow<Event> = _event
 
-    fun fetchPodcast(url: String) {
+    init {
+        getPodcastFromCache()
+    }
+
+    private fun getPodcastFromCache() {
         _event.value = Event.Loading
 
         viewModelScope.launch {
             try {
-                _event.value = Event.WithPodcastData(podcastRepository.getPodcast(url))
-            } catch (error: Throwable) {
+                localPodcastRepository.getSelectedPodcast()?.let {
+                    _event.value = Event.WithPodcastData(it)
+                }
+            } catch (_: Throwable) {
                 _event.value = Event.Error
             }
         }

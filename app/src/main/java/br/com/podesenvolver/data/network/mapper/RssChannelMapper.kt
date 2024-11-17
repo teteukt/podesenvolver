@@ -9,5 +9,5 @@ fun ITunesChannelData.toDomain() = Podcast(
     author = this.author.orEmpty(),
     description = this.description.orEmpty(),
     category = this.categories.orEmpty().firstOrNull()?.name.orEmpty(),
-    episodes = this.items?.map { it.toDomain() }.orEmpty()
+    episodes = this.items?.mapIndexed { index, item -> item.toDomain(index) }.orEmpty()
 )

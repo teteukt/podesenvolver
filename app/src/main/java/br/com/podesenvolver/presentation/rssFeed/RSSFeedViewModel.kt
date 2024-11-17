@@ -4,12 +4,16 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewModel() {
+class RSSFeedViewModel(
+    private val podcastRepository: PodcastRepository,
+    private val localPodcastRepository: LocalPodcastRepository
+) : ViewModel() {
 
     val rssUrlText = mutableStateOf("")
     val actionError = mutableStateOf<ActionError?>(null)
@@ -23,7 +27,8 @@ class RSSFeedViewModel(private val podcastRepository: PodcastRepository) : ViewM
 
         viewModelScope.launch {
             try {
-                podcastRepository.getPodcast(rssPodcastUrl)
+                val podcast = podcastRepository.getPodcast(rssPodcastUrl)
+                localPodcastRepository.selectPodcast(podcast)
                 _event.value = Event.RedirectToPodcast(rssPodcastUrl)
             } catch (error: Throwable) {
                 handleGetPodcastError(error)
