@@ -26,7 +26,7 @@ class PodcastDetailActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            val state by viewModel.event.collectAsState()
+            val state by viewModel.state.collectAsState()
             PodcastDetailUI(state, onClickEpisode = {
                 startActivity(intentEpisode(it.id))
             })
