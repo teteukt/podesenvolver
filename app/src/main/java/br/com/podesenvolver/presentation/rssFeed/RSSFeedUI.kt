@@ -45,7 +45,7 @@ fun RSSFeedUI(
     }
 
     (state as? RSSFeedViewModel.Event.RedirectToPodcast)?.let {
-        StartPodcastActivity(it.url)
+        StartPodcastActivity(it.podcastId)
     }
 
     PodesenvolverTheme {
@@ -69,8 +69,8 @@ private fun AlertDialogActionError(onDismiss: () -> Unit, title: String, text: S
 }
 
 @Composable
-private fun StartPodcastActivity(rssPodcastUrl: String) {
+private fun StartPodcastActivity(podcastId: Long) {
     with(LocalContext.current) {
-        startActivity(intentPodcastDetail(rssPodcastUrl))
+        startActivity(intentPodcastDetail(podcastId))
     }
 }

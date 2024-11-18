@@ -1,8 +1,6 @@
 package br.com.podesenvolver.presentation.episode
 
 import androidx.annotation.OptIn
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultHttpDataSource
@@ -10,6 +8,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Episode
+import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,25 +16,27 @@ import kotlinx.coroutines.launch
 class EpisodeViewModel(
     private val repository: LocalPodcastRepository,
     private val exoPlayer: ExoPlayer
-) : ViewModel() {
+) : BaseViewModel() {
 
-    private val _episode = MutableStateFlow<Event>(Event.Loading)
-    val episode: StateFlow<Event> = _episode
+    private val _state = MutableStateFlow<Event>(Event.Loading)
+    val state: StateFlow<Event> = _state
 
-    fun releasePlayer() {
-        exoPlayer.stop()
-    }
+    private val _playing = MutableStateFlow(false)
+    val playing: StateFlow<Boolean> = _playing
 
-    fun fetchEpisodeDataById(id: String) {
-        _episode.value = Event.Loading
+    private val _episodeProgress = MutableStateFlow(0L)
+    val episodeProgress: StateFlow<Long> = _episodeProgress
 
-        viewModelScope.launch {
-            repository.getEpisodeFromSelectedPodcastById(id)?.let {
+    fun getEpisodeById(id: Long) {
+        _state.value = Event.Loading
+
+        launch {
+            repository.getEpisodeById(id)?.let {
                 prepareEpisode(it)
                 playEpisode()
-                _episode.value = Event.WithEpisode(it)
+                _state.value = Event.WithEpisode(it)
             } ?: run {
-                _episode.value = Event.NotFound
+                _state.value = Event.NotFound
             }
         }
     }
@@ -48,9 +49,25 @@ class EpisodeViewModel(
         exoPlayer.prepare()
     }
 
-    private fun playEpisode() {
-        exoPlayer.play()
+    fun playEpisode() {
+        if (_playing.value.not()) {
+            exoPlayer.play()
+            _playing.value = true
+        }
     }
+
+    fun pauseEpisode() {
+        if (_playing.value) {
+            exoPlayer.pause()
+            _playing.value = false
+        }
+    }
+
+    fun seekEpisodeTo(progress: Float) {
+        exoPlayer.seekTo((exoPlayer.duration.toFloat() * progress).toLong())
+    }
+
+    fun getEpisodeProgress() = exoPlayer.currentPosition
 
     sealed class Event {
         data object Loading : Event()

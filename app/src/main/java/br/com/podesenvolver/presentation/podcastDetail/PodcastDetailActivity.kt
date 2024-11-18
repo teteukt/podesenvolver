@@ -8,18 +8,19 @@ import br.com.podesenvolver.presentation.EXTRA_PODCAST_URL
 
 class PodcastDetailActivity : ComponentActivity() {
 
-    private val rssPodcastUrl: String? by lazy { intent?.extras?.getString(EXTRA_PODCAST_URL) }
+    private val podcastId: Long? by lazy { intent?.extras?.getLong(EXTRA_PODCAST_URL) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(rssPodcastUrl == null) {
+        val safePodcastId = podcastId
+        if (safePodcastId == null) {
             finish()
             return
         }
 
         enableEdgeToEdge()
         setContent {
-            PodcastDetailUI()
+            PodcastDetailUI(safePodcastId)
         }
     }
 }
