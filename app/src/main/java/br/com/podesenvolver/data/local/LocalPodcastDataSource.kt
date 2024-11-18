@@ -11,5 +11,5 @@ object LocalPodcastDataSource {
         selectedPodcast = podcast
     }
 
-    fun getEpisodeFromSelectedPodcastById(episodeId: String): Episode? = selectedPodcast?.episodes?.find { it.id == episodeId }
+    fun getEpisodeFromSelectedPodcastById(episodeId: String): Episode? = selectedPodcast?.episodes?.find { it.guid == episodeId }
 }

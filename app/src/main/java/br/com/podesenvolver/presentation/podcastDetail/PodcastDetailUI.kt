@@ -12,8 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
@@ -26,16 +26,20 @@ import coil3.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun PodcastDetailUI(viewModel: PodcastDetailViewModel = koinViewModel()) {
-    val state: PodcastDetailViewModel.Event by viewModel.event.collectAsState()
+fun PodcastDetailUI(podcastId: Long, viewModel: PodcastDetailViewModel = koinViewModel()) {
+    val state by remember { viewModel.event }
+
+    LaunchedEffect(null) {
+        viewModel.getPodcastById(podcastId)
+    }
 
     PodesenvolverTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             Box(Modifier.padding(innerPadding)) {
                 when (val screenState = state) {
-                    is PodcastDetailViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast) {
+                    is PodcastDetailViewModel.Event.WithPodcastData -> UIWithPodcast(screenState.podcast, onClickEpisode = {
                         viewModel.selectEpisode(it)
-                    }
+                    })
                     is PodcastDetailViewModel.Event.SelectedEpisode -> StartEpisodeActivity(screenState.episode)
                     else -> UILoading()
                 }
@@ -48,7 +52,7 @@ fun PodcastDetailUI(viewModel: PodcastDetailViewModel = koinViewModel()) {
 private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
     LazyColumn {
         item {
-            AsyncImage(podcast.imageUrl, "")
+            AsyncImage(podcast.imageUrl, "imagem do podcast")
         }
         item {
             Text(podcast.title)

@@ -1,5 +1,6 @@
 package br.com.podesenvolver.di
 
+import br.com.podesenvolver.data.local.DatabaseConfig
 import br.com.podesenvolver.data.local.LocalPodcastDataSource
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepositoryImpl
@@ -13,9 +14,10 @@ import org.koin.dsl.module
 
 val dataModules = module {
     single { KtorClientConfig.config() }
+    single { DatabaseConfig.create(androidApplication()) }
     single { PodcastDataSource(get()) }
     single { LocalPodcastDataSource }
     single { MediaProvider.createExoPlayer(androidApplication()) }
     factory<PodcastRepository> { PodcastRepositoryImpl(get()) }
-    factory<LocalPodcastRepository> { LocalPodcastRepositoryImpl(get()) }
+    factory<LocalPodcastRepository> { LocalPodcastRepositoryImpl(get(), get()) }
 }

@@ -1,11 +1,9 @@
 package br.com.podesenvolver.presentation.rssFeed
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.network.repository.PodcastRepository
+import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -13,7 +11,7 @@ import kotlinx.coroutines.launch
 class RSSFeedViewModel(
     private val podcastRepository: PodcastRepository,
     private val localPodcastRepository: LocalPodcastRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     val rssUrlText = mutableStateOf("")
     val actionError = mutableStateOf<ActionError?>(null)
@@ -25,19 +23,14 @@ class RSSFeedViewModel(
         _event.value = Event.Loading
         val rssPodcastUrl = rssUrlText.value
 
-        viewModelScope.launch {
-            try {
-                val podcast = podcastRepository.getPodcast(rssPodcastUrl)
-                localPodcastRepository.selectPodcast(podcast)
-                _event.value = Event.RedirectToPodcast(rssPodcastUrl)
-            } catch (error: Throwable) {
-                handleGetPodcastError(error)
-            }
+        launch(::handleGetPodcastError) {
+            val podcast = podcastRepository.getPodcast(rssPodcastUrl)
+            val podcastId = localPodcastRepository.savePodcast(podcast)
+            _event.value = Event.RedirectToPodcast(podcastId)
         }
     }
 
     private fun handleGetPodcastError(throwable: Throwable) {
-        Log.e("Podesenvolver", throwable.message, throwable)
         _event.value = when (throwable) {
             is IllegalArgumentException -> {
                 actionError.value = ActionError.Parse
@@ -58,7 +51,7 @@ class RSSFeedViewModel(
 
     sealed class Event {
         data object Initial : Event()
-        data class RedirectToPodcast(val url: String) : Event()
+        data class RedirectToPodcast(val podcastId: Long) : Event()
         data object ParseError : Event()
         data object GenericError : Event()
         data object Loading : Event()
