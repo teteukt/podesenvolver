@@ -24,9 +24,6 @@ class EpisodeViewModel(
     private val _playing = MutableStateFlow(false)
     val playing: StateFlow<Boolean> = _playing
 
-    private val _episodeProgress = MutableStateFlow(0L)
-    val episodeProgress: StateFlow<Long> = _episodeProgress
-
     fun getEpisodeById(id: Long) {
         _state.value = Event.Loading
 
@@ -66,8 +63,6 @@ class EpisodeViewModel(
     fun seekEpisodeTo(progress: Float) {
         exoPlayer.seekTo((exoPlayer.duration.toFloat() * progress).toLong())
     }
-
-    fun getEpisodeProgress() = exoPlayer.currentPosition
 
     sealed class Event {
         data object Loading : Event()
