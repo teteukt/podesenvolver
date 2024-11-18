@@ -11,12 +11,6 @@ class MediaProvider {
         @OptIn(UnstableApi::class)
         fun createExoPlayer(application: Application): ExoPlayer {
             val loadControl = DefaultLoadControl.Builder()
-                .setBufferDurationsMs(
-                    DefaultLoadControl.DEFAULT_MIN_BUFFER_MS,
-                    DefaultLoadControl.DEFAULT_MAX_BUFFER_MS,
-                    DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_MS,
-                    DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS
-                )
                 .build()
             return ExoPlayer.Builder(application).setLoadControl(loadControl).build()
         }
