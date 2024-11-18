@@ -4,11 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Podcast
+import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class PodcastDetailViewModel(private val localPodcastRepository: LocalPodcastRepository) : ViewModel() {
+class PodcastDetailViewModel(private val localPodcastRepository: LocalPodcastRepository) : BaseViewModel() {
 
     private val _state = MutableStateFlow<Event>(Event.Loading)
     val state: StateFlow<Event> = _state
@@ -16,7 +17,7 @@ class PodcastDetailViewModel(private val localPodcastRepository: LocalPodcastRep
     fun getPodcastById(id: Long) {
         _state.value = Event.Loading
 
-        viewModelScope.launch {
+        launch {
             try {
                 localPodcastRepository.getPodcastById(id)?.let {
                     _state.value = Event.WithPodcastData(it)
