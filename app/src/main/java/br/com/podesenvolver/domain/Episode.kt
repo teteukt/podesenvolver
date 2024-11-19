@@ -6,5 +6,6 @@ data class Episode(
     val guid: String,
     val title: String,
     val description: String,
-    val enclosure: EpisodeEnclosure
+    val enclosure: EpisodeEnclosure,
+    val duration: String
 )

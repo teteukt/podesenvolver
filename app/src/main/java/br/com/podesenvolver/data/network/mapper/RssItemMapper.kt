@@ -9,5 +9,6 @@ fun ITunesItemData.toDomain(index: Int) = Episode(
     guid = this.guid?.value.orEmpty(),
     title = this.title.orEmpty(),
     description = this.description.orEmpty(),
-    enclosure = this.enclosure?.toDomain() ?: EMPTY_ENCLOSURE
+    enclosure = this.enclosure?.toDomain() ?: EMPTY_ENCLOSURE,
+    duration = this.duration.orEmpty()
 )

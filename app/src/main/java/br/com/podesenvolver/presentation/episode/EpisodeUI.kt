@@ -1,62 +1,82 @@
 package br.com.podesenvolver.presentation.episode
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import br.com.podesenvolver.presentation.PodesenvolverTheme
+import br.com.podesenvolver.domain.Episode
+import br.com.podesenvolver.extensions.toTimeDisplayText
 import br.com.podesenvolver.presentation.episode.ui.components.PlayerControls
+import br.com.podesenvolver.presentation.ui.components.UIError
 import br.com.podesenvolver.presentation.ui.components.UILoading
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EpisodeUI(
-    viewModel: EpisodeViewModel = koinViewModel()
+    position: Long,
+    state: EpisodeViewModel.State,
+    onPlay: (Episode) -> Unit,
+    onPause: () -> Unit,
+    onSeek: (Float) -> Unit,
+    onGoPrevious: () -> Unit,
+    onGoNext: () -> Unit
 ) {
-    val state by viewModel.state.collectAsState()
-    val currentState = state
 
-    PodesenvolverTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Box(Modifier.padding(innerPadding)) {
-                when (currentState) {
-                    is EpisodeViewModel.Event.WithEpisode -> UIWithEpisode(
-                        event = currentState,
-                        onGoPrevious = {},
-                        onGoNext = {}
-                    )
+    when (state) {
+        is EpisodeViewModel.State.WithEpisode -> UIWithEpisode(
+            position = position,
+            state = state,
+            onPlay = onPlay,
+            onPause = onPause,
+            onGoPrevious = onGoPrevious,
+            onGoNext = onGoNext,
+            onSeek = onSeek
+        )
 
-                    else -> UILoading()
-                }
-            }
-        }
+        is EpisodeViewModel.State.Loading -> UILoading()
+        is EpisodeViewModel.State.NotFound -> UIError(
+            "Não encontrado",
+            "O episódio requisitado não pôde ser encontrado ou não existe."
+        )
     }
 }
 
 @Composable
 fun UIWithEpisode(
-    event: EpisodeViewModel.Event.WithEpisode,
+    position: Long,
+    state: EpisodeViewModel.State.WithEpisode,
+    onPlay: (Episode) -> Unit,
+    onPause: () -> Unit,
+    onSeek: (Float) -> Unit,
     onGoPrevious: () -> Unit,
-    onGoNext: () -> Unit,
-    viewModel: EpisodeViewModel = koinViewModel()
+    onGoNext: () -> Unit
 ) {
-    val playing by viewModel.playing.collectAsState()
-
-    Column {
-        Text(event.episode.title)
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(state.episode.title)
+        TimerDurationText(position, state)
         PlayerControls(
-            playing = playing,
-            onPlay = { viewModel.playEpisode() },
-            onPause = { viewModel.pauseEpisode() },
+            playing = state.playing,
+            onPlay = { onPlay(state.episode) },
+            onPause = onPause,
             onGoPrevious = onGoPrevious,
             onGoNext = onGoNext,
-            onSeek = viewModel::seekEpisodeTo
+            onSeek = onSeek
         )
+    }
+}
+
+@Composable
+fun TimerDurationText(position: Long, state: EpisodeViewModel.State.WithEpisode) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Text(position.toTimeDisplayText())
+        Text(state.episode.duration)
     }
 }

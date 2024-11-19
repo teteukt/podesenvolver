@@ -14,5 +14,6 @@ fun EpisodeEntity.toDomain() = Episode(
         audioUrl = this.audioUrl,
         type = this.type,
         length = this.length
-    )
+    ),
+    duration = this.duration
 )

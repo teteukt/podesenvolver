@@ -34,7 +34,8 @@ class LocalPodcastRepositoryImpl(
                 description = it.description,
                 audioUrl = it.enclosure.audioUrl,
                 type = it.enclosure.type,
-                length = it.enclosure.length
+                length = it.enclosure.length,
+                duration = it.duration
             )
         }
 

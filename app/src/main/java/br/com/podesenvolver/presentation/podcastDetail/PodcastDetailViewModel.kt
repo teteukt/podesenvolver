@@ -1,13 +1,10 @@
 package br.com.podesenvolver.presentation.podcastDetail
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Podcast
 import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class PodcastDetailViewModel(private val localPodcastRepository: LocalPodcastRepository) : BaseViewModel() {
 

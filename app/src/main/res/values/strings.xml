@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">podesenvolver</string>
+    <string name="episode_screen_error_title_not_found">Não encontrado.</string>
+    <string name="episode_screen_error_description_not_found">O episódio requisitado não pôde ser encontrado ou não existe.</string>
 </resources>
