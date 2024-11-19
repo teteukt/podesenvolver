@@ -17,7 +17,7 @@ import br.com.podesenvolver.presentation.ui.components.UILoading
 
 @Composable
 fun EpisodeUI(
-    position: Long,
+    positionDuration: EpisodeViewModel.PositionDuration,
     state: EpisodeViewModel.State,
     onPlay: (Episode) -> Unit,
     onPause: () -> Unit,
@@ -27,7 +27,7 @@ fun EpisodeUI(
 ) {
     when (state) {
         is EpisodeViewModel.State.WithEpisode -> UIWithEpisode(
-            position = position,
+            positionDuration = positionDuration,
             state = state,
             onPlay = onPlay,
             onPause = onPause,
@@ -46,7 +46,7 @@ fun EpisodeUI(
 
 @Composable
 fun UIWithEpisode(
-    position: Long,
+    positionDuration: EpisodeViewModel.PositionDuration,
     state: EpisodeViewModel.State.WithEpisode,
     onPlay: (Episode) -> Unit,
     onPause: () -> Unit,
@@ -60,7 +60,7 @@ fun UIWithEpisode(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(state.episode.title)
-        TimerDurationText(position, state)
+        TimerDurationText(positionDuration, state)
         PlayerControls(
             playing = state.playing,
             onPlay = { onPlay(state.episode) },
@@ -73,9 +73,9 @@ fun UIWithEpisode(
 }
 
 @Composable
-fun TimerDurationText(position: Long, state: EpisodeViewModel.State.WithEpisode) {
+fun TimerDurationText(positionDuration: EpisodeViewModel.PositionDuration, state: EpisodeViewModel.State.WithEpisode) {
     Row(modifier = Modifier.fillMaxWidth()) {
-        Text(position.toTimeDisplayText())
-        Text(state.episode.duration)
+        Text(positionDuration.position.toTimeDisplayText())
+        Text(positionDuration.duration.toTimeDisplayText())
     }
 }

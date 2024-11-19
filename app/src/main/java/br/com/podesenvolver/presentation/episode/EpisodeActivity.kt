@@ -47,7 +47,7 @@ class EpisodeActivity : ComponentActivity() {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                         Box(Modifier.padding(innerPadding)) {
                             EpisodeUI(
-                                position = position,
+                                positionDuration = position,
                                 state = state,
                                 onPlay = { viewModel.playEpisode(it) },
                                 onPause = { viewModel.pauseEpisode() },

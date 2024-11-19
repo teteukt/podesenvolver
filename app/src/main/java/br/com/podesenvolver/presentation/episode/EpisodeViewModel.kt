@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlin.math.max
 
 class EpisodeViewModel(
     private val repository: LocalPodcastRepository,
@@ -32,8 +33,8 @@ class EpisodeViewModel(
     private val _state = MutableStateFlow<State>(State.Loading)
     val state: StateFlow<State> = _state
 
-    private val _position = MutableStateFlow(0L)
-    val position: StateFlow<Long> = _position
+    private val _position = MutableStateFlow(PositionDuration())
+    val position: StateFlow<PositionDuration> = _position
 
     init {
         exoPlayer.addListener(object : Player.Listener {
@@ -60,10 +61,10 @@ class EpisodeViewModel(
         }
     }
 
-    fun initPositionTimer() = flow {
+    private fun initPositionTimer() = flow {
         while (true) {
+            emit(PositionDuration(exoPlayer.currentPosition, max(0, exoPlayer.duration)))
             delay(1000)
-            emit(exoPlayer.currentPosition)
         }
     }
 
@@ -73,7 +74,7 @@ class EpisodeViewModel(
         launch {
             repository.getPodcastById(podcastId)?.also { podcast = it }?.episodes?.find { it.id == episodeId }?.let {
                 prepareEpisode(it)
-                _position.value = 0
+                _position.value = PositionDuration()
                 playEpisode(it)
                 startTimer()
             } ?: run {
@@ -138,5 +139,9 @@ class EpisodeViewModel(
             val playing: Boolean,
             val duration: Long
         ) : State()
+    }
+
+    data class PositionDuration(val position: Long = 0, val duration: Long = 0) {
+        fun ratio() = (position.toFloat() / duration.toFloat())
     }
 }
