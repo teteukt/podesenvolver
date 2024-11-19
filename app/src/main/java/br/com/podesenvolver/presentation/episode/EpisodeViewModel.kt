@@ -46,7 +46,7 @@ class EpisodeViewModel(
         })
     }
 
-    fun toggleTime() {
+    private fun startTimer() {
         positionJob?.run {
             positionJob?.cancel()
             positionJob = null
@@ -75,7 +75,7 @@ class EpisodeViewModel(
                 prepareEpisode(it)
                 _position.value = 0
                 playEpisode(it)
-                toggleTime()
+                startTimer()
             } ?: run {
                 _state.value = State.NotFound
             }
