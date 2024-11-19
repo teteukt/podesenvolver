@@ -2,17 +2,15 @@ package br.com.podesenvolver.presentation.episode
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.PositionDuration
-import br.com.podesenvolver.extensions.toTimeDisplayText
 import br.com.podesenvolver.presentation.episode.ui.components.PlayerControls
+import br.com.podesenvolver.presentation.episode.ui.components.TimerDurationText
 import br.com.podesenvolver.presentation.ui.components.UIError
 import br.com.podesenvolver.presentation.ui.components.UILoading
 
@@ -71,15 +69,5 @@ fun UIWithEpisode(
             onGoNext = onGoNext,
             onSeek = onSeek
         )
-    }
-}
-
-@Composable
-fun TimerDurationText(
-    positionDuration: PositionDuration
-) {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Text(positionDuration.position.toTimeDisplayText())
-        Text(positionDuration.duration.toTimeDisplayText())
     }
 }

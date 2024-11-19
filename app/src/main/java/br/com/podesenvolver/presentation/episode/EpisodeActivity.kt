@@ -43,19 +43,17 @@ class EpisodeActivity : ComponentActivity() {
             val position by viewModel.position.collectAsState()
 
             PodesenvolverTheme {
-                PodesenvolverTheme {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        Box(Modifier.padding(innerPadding)) {
-                            EpisodeUI(
-                                positionDuration = position,
-                                state = state,
-                                onPlay = { viewModel.playEpisode(it) },
-                                onPause = { viewModel.pauseEpisode() },
-                                onGoNext = { viewModel.seekToNextEpisode() },
-                                onGoPrevious = { viewModel.seekToPreviousEpisode() },
-                                onSeek = { viewModel.seekEpisodeTo(it) }
-                            )
-                        }
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Box(Modifier.padding(innerPadding)) {
+                        EpisodeUI(
+                            positionDuration = position,
+                            state = state,
+                            onPlay = { viewModel.playEpisode(it) },
+                            onPause = { viewModel.pauseEpisode() },
+                            onGoNext = { viewModel.seekToNextEpisode() },
+                            onGoPrevious = { viewModel.seekToPreviousEpisode() },
+                            onSeek = { viewModel.seekEpisodeTo(it) }
+                        )
                     }
                 }
             }

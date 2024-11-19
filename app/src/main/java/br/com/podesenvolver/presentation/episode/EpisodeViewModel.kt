@@ -13,7 +13,6 @@ import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
 import br.com.podesenvolver.domain.PositionDuration
-import br.com.podesenvolver.extensions.orZero
 import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -76,11 +75,11 @@ class EpisodeViewModel(
         launch {
             repository.getPodcastById(podcastId)
                 ?.also { podcast = it }?.episodes?.find { it.id == episodeId }?.let {
-                prepareEpisode(it)
-                _position.value = PositionDuration()
-                playEpisode(it)
-                startTimer()
-            } ?: run {
+                    prepareEpisode(it)
+                    _position.value = PositionDuration()
+                    playEpisode(it)
+                    startTimer()
+                } ?: run {
                 _state.value = State.NotFound
             }
         }
