@@ -11,9 +11,7 @@ fun EpisodeEntity.toDomain() = Episode(
     title = this.title,
     description = this.description,
     enclosure = EpisodeEnclosure(
-        audioUrl = this.audioUrl,
-        type = this.type,
-        length = this.length
+        audioUrl = this.audioUrl
     ),
     duration = this.duration
 )

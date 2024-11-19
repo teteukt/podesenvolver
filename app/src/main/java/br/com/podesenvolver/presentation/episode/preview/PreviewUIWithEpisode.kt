@@ -29,7 +29,7 @@ fun PreviewUIWithEpisode() {
                             guid = "",
                             title = "Título do episódio",
                             description = "descrição",
-                            enclosure = EpisodeEnclosure("", "", 0),
+                            enclosure = EpisodeEnclosure(""),
                             duration = ""
                         ),
                         playing = true,

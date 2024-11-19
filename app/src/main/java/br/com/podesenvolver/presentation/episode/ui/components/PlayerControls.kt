@@ -18,12 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import br.com.podesenvolver.R
 import br.com.podesenvolver.domain.PositionDuration
-import br.com.podesenvolver.presentation.PodesenvolverTheme
 
 @Composable
 fun PlayerControls(
@@ -62,22 +59,31 @@ fun PlayerControls(
                 )
             }
             IconButton(onClick = {
-                if (playing) onPause()
-                else onPlay()
+                if (playing) {
+                    onPause()
+                } else {
+                    onPlay()
+                }
             }) {
                 val contentDescription =
-                    if (playing) "pausar"
-                    else "reproduzir"
+                    if (playing) {
+                        "pausar"
+                    } else {
+                        "reproduzir"
+                    }
 
                 @DrawableRes val icon =
-                    if (playing) R.drawable.round_pause_circle_24
-                    else R.drawable.round_play_circle_24
+                    if (playing) {
+                        R.drawable.round_pause_circle_24
+                    } else {
+                        R.drawable.round_play_circle_24
+                    }
 
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(icon),
                     contentDescription = contentDescription,
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
+                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
                 )
             }
             IconButton(onClick = onGoNext) {
