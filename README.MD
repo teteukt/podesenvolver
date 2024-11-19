@@ -1,5 +1,7 @@
 ### Podesevolver
 
+<img src="https://github.com/user-attachments/assets/1d2989a0-ad9c-4125-a145-4d31b1b0974c" height="450px"/>
+
 Aplicativo Android voltado para consumo de repositórios RSS públicos de Podcasts que seguem o padrão da Apple. (https://podcasters.apple.com/support/823-podcast-requirements)
 
 Arquitetura: MVVM
