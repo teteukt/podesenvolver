@@ -12,6 +12,7 @@ Tecnologias utilizadas:
 - Material3 (Componentes nativos que seguem o Design System do Material)
 - Media3 (Reprodução de media audiovisual e carregamento de conteúdo remoto de forma asíncrona)
 - Room (Banco de dados local SQLite)
+- Coil (Componente asíncrono de imagem vindas de URL)
 
 ## Checklist
 
@@ -47,9 +48,15 @@ Tecnologias utilizadas:
   - [X] Voltar ou retroceder no tempo do episódio ao interagir com o slider
   - [X] Mostrar título do episódio
   - [ ] Mostrar descrição do episódio
+- [ ] Utilizar Service para reprodução de audio
+- [ ] Disparar notificação de media ao reproduzir episódio
+- [ ] Testes de ViewModel
+- [ ] Testes de UI
+- [ ] Testes de Repositório
 
-## Maiores dificuldades
+## Dificuldades
 
 1. Serializar XML seja com Retrofit ou Ktor
 2. Sincronizar informações do Exo Player com a tela
-  
+3. Utilização de Services para reprodução de mídia
+4. Quais objetos de state management usar na arquitetura
