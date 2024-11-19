@@ -15,6 +15,7 @@ Tecnologias utilizadas:
 - Media3 (Reprodução de media audiovisual e carregamento de conteúdo remoto de forma asíncrona)
 - Room (Banco de dados local SQLite)
 - Coil (Componente asíncrono de imagem vindas de URL)
+- Spotless (Formatação de código)
 
 ## Checklist
 
@@ -22,6 +23,8 @@ Tecnologias utilizadas:
 - [X] Configurar um HTTP Client para consumo de dados remotos
 - [X] Configurar o HTTP Client para receber dados em formato RSS/XML seguindo as especificações da Apple.
 - [ ] Configurar banco de dados local com Room
+- [X] Instalar e configurar Spotless
+- [ ] Instalar e configurar Detekt
 - [X] Tela 1 - Fonte de RSS
   - [X] Estado de carregamento
   - [X] Estado de erro
