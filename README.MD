@@ -67,4 +67,4 @@ Tecnologias utilizadas:
 1. Serializar XML seja com Retrofit ou Ktor
 2. Sincronizar informações do Exo Player com a tela
 3. Utilização de Services para reprodução de mídia
-4. Quais objetos de state management usar na arquitetura
+4. Quais objetos de state management usar na arquitetura (ex.: StateFlow, State, LiveData, etc)
