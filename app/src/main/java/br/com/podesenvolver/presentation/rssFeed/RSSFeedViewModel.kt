@@ -1,59 +1,67 @@
 package br.com.podesenvolver.presentation.rssFeed
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import br.com.podesenvolver.R
 
 class RSSFeedViewModel(
     private val podcastRepository: PodcastRepository,
     private val localPodcastRepository: LocalPodcastRepository
 ) : BaseViewModel() {
 
-    val rssUrlText = mutableStateOf("")
-    val actionError = mutableStateOf<ActionError?>(null)
+    private val _foundPodcast = MutableLiveData<Long?>()
+    val foundPodcast: LiveData<Long?> = _foundPodcast
 
-    private val _event = MutableStateFlow<Event>(Event.Initial)
-    val event: StateFlow<Event> = _event
+    val error = mutableStateOf<ErrorType?>(null)
 
-    fun fetchPodcast() {
-        _event.value = Event.Loading
-        val rssPodcastUrl = rssUrlText.value
+    private val _state = MutableStateFlow<State>(State.Initial)
+    val state: StateFlow<State> = _state
+
+    fun fetchPodcast(rssPodcastUrl: String) {
+        _state.value = State.Loading
 
         launch(::handleGetPodcastError) {
             val podcast = podcastRepository.getPodcast(rssPodcastUrl)
             val podcastId = localPodcastRepository.savePodcast(podcast)
-            _event.value = Event.RedirectToPodcast(podcastId)
+            _foundPodcast.postValue(podcastId)
         }
     }
 
     private fun handleGetPodcastError(throwable: Throwable) {
-        _event.value = when (throwable) {
+        _state.value = when (throwable) {
             is IllegalArgumentException -> {
-                actionError.value = ActionError.Parse
-                Event.ParseError
+                error.value = ErrorType.NotFound
+                State.Initial
             }
             else -> {
-                actionError.value = ActionError.Generic
-                Event.GenericError
+                error.value = ErrorType.Generic
+                State.Initial
             }
         }
     }
 
-    fun isLoading() = event.value is Event.Loading
-
-    enum class ActionError {
-        Generic, Parse
+    enum class ErrorType(
+        @StringRes val title: Int,
+        @StringRes val description: Int
+    ) {
+        Generic(
+            title = R.string.rss_feed_screen_title_generic_error,
+            description = R.string.rss_feed_screen_message_generic_error
+        ), NotFound(
+            title = R.string.rss_feed_screen_title_not_found_error,
+            description = R.string.rss_feed_screen_message_not_found_error
+        )
     }
 
-    sealed class Event {
-        data object Initial : Event()
-        data class RedirectToPodcast(val podcastId: Long) : Event()
-        data object ParseError : Event()
-        data object GenericError : Event()
-        data object Loading : Event()
+    sealed class State {
+        data object Initial : State()
+        data object Loading : State()
     }
 }
