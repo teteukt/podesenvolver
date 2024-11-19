@@ -85,18 +85,3 @@ fun RSSFeedUI(
         ) { Text(stringResource(R.string.rss_feed_screen_search_button)) }
     }
 }
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewRSSFeedUI() {
-    PodesenvolverTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) {
-            Box(Modifier.padding(it)) {
-                RSSFeedUI(
-                    fetchingPodcast = false,
-                    onSearch = { }
-                )
-            }
-        }
-    }
-}

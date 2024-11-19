@@ -1,9 +1,11 @@
 package br.com.podesenvolver.presentation.episode.ui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.podesenvolver.R
@@ -59,25 +62,23 @@ fun PlayerControls(
                 )
             }
             IconButton(onClick = {
-                if (playing) {
-                    onPause()
-                } else {
-                    onPlay()
-                }
+                if (playing) onPause()
+                else onPlay()
             }) {
-                if (playing) {
-                    Image(
-                        painter = painterResource(R.drawable.round_pause_circle_24),
-                        contentDescription = "pausar",
-                        colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
-                    )
-                } else {
-                    Image(
-                        painter = painterResource(R.drawable.round_play_circle_24),
-                        contentDescription = "reproduzir",
-                        colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
-                    )
-                }
+                val contentDescription =
+                    if (playing) "pausar"
+                    else "reproduzir"
+
+                @DrawableRes val icon =
+                    if (playing) R.drawable.round_pause_circle_24
+                    else R.drawable.round_play_circle_24
+
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painterResource(icon),
+                    contentDescription = contentDescription,
+                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
+                )
             }
             IconButton(onClick = onGoNext) {
                 Image(
@@ -87,21 +88,5 @@ fun PlayerControls(
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewPlayerControls() {
-    PodesenvolverTheme {
-        PlayerControls(
-            positionDuration = PositionDuration(30000, 60000),
-            playing = false,
-            onPlay = {},
-            onPause = {},
-            onGoPrevious = {},
-            onGoNext = {},
-            onSeek = {}
-        )
     }
 }

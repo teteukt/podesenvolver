@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import br.com.podesenvolver.domain.PositionDuration
 import br.com.podesenvolver.extensions.toTimeDisplayText
 
@@ -18,10 +17,4 @@ fun TimerDurationText(
         Text(positionDuration.position.toTimeDisplayText())
         Text(positionDuration.duration.toTimeDisplayText())
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewTimerDurationText() {
-    TimerDurationText(PositionDuration(30000, 60000))
 }
