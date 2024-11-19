@@ -23,12 +23,16 @@ Tecnologias utilizadas:
 - [X] Configurar o HTTP Client para receber dados em formato RSS/XML seguindo as especificações da Apple.
 - [ ] Configurar banco de dados local com Room
 - [X] Tela 1 - Fonte de RSS
+  - [X] Estado de carregamento
+  - [X] Estado de erro
   - [X] Buscar RSS de um Podcast com sucesso e direcionar para tela de detalhe do podcast
   - [X] Persistir RSS do podcast no banco de dados em caso de busca com sucesso
   - [ ] Histórico de URL usadas
   - [ ] Limpar histórico
   - [ ] Limpar registro de histórico
 - [X] Tela 2 - Detalhes do Podcast
+  - [X] Estado de carregamento
+  - [X] Estado de erro
   - [X] Utilizar dados do podcast vindo do banco de dados local.
   - [X] Tela mostra título do podcast
   - [X] Tela mostra imagem do podcast
@@ -39,6 +43,8 @@ Tecnologias utilizadas:
   - [X] Tela mostra episódios do podcast
   - [X] Redireciona para tela de Player do episódio
 - [X] Tela 3 - Player
+  - [X] Estado de carregamento
+  - [X] Estado de erro
   - [X] Utilizar dados do podcast vindo do banco de dados local.
   - [X] Reproduzir episódio ao entrar na tela
   - [X] Reproduzir episódio ao tocar no botão de reprodução
