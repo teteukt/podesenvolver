@@ -70,7 +70,7 @@ fun UIWithEpisode(
         AsyncImage(
             state.imageUrl,
             contentDescription = "imagem do episódio",
-            modifier = Modifier.heightIn(max = 512.dp).clip(RoundedCornerShape(8.dp)),
+            modifier = Modifier.heightIn(max = 512.dp).clip(RoundedCornerShape(8.dp))
 
         )
         Text(state.episode.title)
