@@ -15,5 +15,5 @@ data class EpisodeEntity(
     @ColumnInfo(name = "audio_url") val audioUrl: String,
     @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "length") val length: Long,
-    @ColumnInfo(name = "duration") val duration: String,
+    @ColumnInfo(name = "duration") val duration: String
 )

@@ -48,7 +48,6 @@ private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
             Text(podcast.description)
             Text(podcast.category)
             Text("Episódios")
-
         }
         LazyColumn(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(podcast.episodes) {

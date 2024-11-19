@@ -4,12 +4,12 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import br.com.podesenvolver.R
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import br.com.podesenvolver.R
 
 class RSSFeedViewModel(
     private val podcastRepository: PodcastRepository,

@@ -61,7 +61,8 @@ class RSSFeedActivity : ComponentActivity() {
                             onSearch = { viewModel.fetchPodcast(rssUrlText) },
                             searchButtonEnabled = searchButtonEnabled,
                             rssUrlText = rssUrlText,
-                            onChangeRssUrlText = { rssUrlText = it })
+                            onChangeRssUrlText = { rssUrlText = it }
+                        )
                     }
                 }
             }

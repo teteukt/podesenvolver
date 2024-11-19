@@ -9,5 +9,5 @@ fun Long.toTimeDisplayText(): String {
     val secondsText = (seconds % 60).toString().padStart(2, '0')
     val minutesText = (minutes % 60).toString().padStart(2, '0')
     val hoursText = hours.toString().padStart(2, '0')
-    return "${hoursText}:${minutesText}:${secondsText}"
+    return "$hoursText:$minutesText:$secondsText"
 }

@@ -39,7 +39,7 @@ class EpisodeViewModel(
         exoPlayer.addListener(object : Player.Listener {
             override fun onPlaybackStateChanged(playbackState: Int) {
                 super.onPlaybackStateChanged(playbackState)
-                if(playbackState == STATE_ENDED) {
+                if (playbackState == STATE_ENDED) {
                     seekToNextEpisode()
                 }
             }

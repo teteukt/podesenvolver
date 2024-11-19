@@ -25,7 +25,6 @@ fun EpisodeUI(
     onGoPrevious: () -> Unit,
     onGoNext: () -> Unit
 ) {
-
     when (state) {
         is EpisodeViewModel.State.WithEpisode -> UIWithEpisode(
             position = position,

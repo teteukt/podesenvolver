@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import br.com.podesenvolver.R
 
-
 @Composable
 fun AlertDialogActionError(onDismiss: () -> Unit, title: String, text: String) {
     AlertDialog(onDismissRequest = onDismiss, confirmButton = {

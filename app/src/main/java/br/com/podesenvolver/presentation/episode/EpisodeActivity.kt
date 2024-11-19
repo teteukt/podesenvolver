@@ -53,7 +53,8 @@ class EpisodeActivity : ComponentActivity() {
                                 onPause = { viewModel.pauseEpisode() },
                                 onGoNext = { viewModel.seekToNextEpisode() },
                                 onGoPrevious = { viewModel.seekToPreviousEpisode() },
-                                onSeek = { viewModel.seekEpisodeTo(it) })
+                                onSeek = { viewModel.seekEpisodeTo(it) }
+                            )
                         }
                     }
                 }
