@@ -12,6 +12,8 @@ import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
+import br.com.podesenvolver.domain.PositionDuration
+import br.com.podesenvolver.extensions.orZero
 import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -72,7 +74,8 @@ class EpisodeViewModel(
         _state.value = State.Loading
 
         launch {
-            repository.getPodcastById(podcastId)?.also { podcast = it }?.episodes?.find { it.id == episodeId }?.let {
+            repository.getPodcastById(podcastId)
+                ?.also { podcast = it }?.episodes?.find { it.id == episodeId }?.let {
                 prepareEpisode(it)
                 _position.value = PositionDuration()
                 playEpisode(it)
@@ -139,9 +142,5 @@ class EpisodeViewModel(
             val playing: Boolean,
             val duration: Long
         ) : State()
-    }
-
-    data class PositionDuration(val position: Long = 0, val duration: Long = 0) {
-        fun ratio(): Float = (position.toFloat() / duration.toFloat()).takeIf { it > 0 } ?: 0F
     }
 }

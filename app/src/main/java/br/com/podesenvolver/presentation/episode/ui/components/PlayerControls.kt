@@ -13,11 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import br.com.podesenvolver.R
+import br.com.podesenvolver.domain.PositionDuration
 import br.com.podesenvolver.presentation.episode.EpisodeViewModel
 
 @Composable
 fun PlayerControls(
-    positionDuration: EpisodeViewModel.PositionDuration,
+    positionDuration: PositionDuration,
     playing: Boolean,
     onPlay: () -> Unit,
     onPause: () -> Unit,

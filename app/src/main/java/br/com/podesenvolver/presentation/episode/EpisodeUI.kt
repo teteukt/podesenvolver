@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.podesenvolver.domain.Episode
+import br.com.podesenvolver.domain.PositionDuration
 import br.com.podesenvolver.extensions.toTimeDisplayText
 import br.com.podesenvolver.presentation.episode.ui.components.PlayerControls
 import br.com.podesenvolver.presentation.ui.components.UIError
@@ -17,7 +18,7 @@ import br.com.podesenvolver.presentation.ui.components.UILoading
 
 @Composable
 fun EpisodeUI(
-    positionDuration: EpisodeViewModel.PositionDuration,
+    positionDuration: PositionDuration,
     state: EpisodeViewModel.State,
     onPlay: (Episode) -> Unit,
     onPause: () -> Unit,
@@ -46,7 +47,7 @@ fun EpisodeUI(
 
 @Composable
 fun UIWithEpisode(
-    positionDuration: EpisodeViewModel.PositionDuration,
+    positionDuration: PositionDuration,
     state: EpisodeViewModel.State.WithEpisode,
     onPlay: (Episode) -> Unit,
     onPause: () -> Unit,
@@ -60,7 +61,7 @@ fun UIWithEpisode(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(state.episode.title)
-        TimerDurationText(positionDuration, state)
+        TimerDurationText(positionDuration)
         PlayerControls(
             positionDuration = positionDuration,
             playing = state.playing,
@@ -75,8 +76,7 @@ fun UIWithEpisode(
 
 @Composable
 fun TimerDurationText(
-    positionDuration: EpisodeViewModel.PositionDuration,
-    state: EpisodeViewModel.State.WithEpisode
+    positionDuration: PositionDuration
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(positionDuration.position.toTimeDisplayText())
