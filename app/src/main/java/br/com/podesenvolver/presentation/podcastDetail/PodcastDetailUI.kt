@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import br.com.podesenvolver.R
 import br.com.podesenvolver.domain.Episode
 import br.com.podesenvolver.domain.Podcast
 import br.com.podesenvolver.presentation.podcastDetail.ui.components.UIPodcastEpisodeItem
@@ -47,7 +49,7 @@ private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
             Text(podcast.author)
             Text(podcast.description)
             Text(podcast.category)
-            Text("Episódios")
+            Text(stringResource(R.string.podcast_detail_episodes))
         }
         LazyColumn(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(podcast.episodes) {
