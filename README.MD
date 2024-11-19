@@ -54,7 +54,7 @@ Tecnologias utilizadas:
   - [X] Pausar episódio ao tocar no botão de pausar
   - [X] Reproduzir próximo episódio ao termino do episódio atual (opt.)
   - [X] Voltar ao episódio inicial do podcast ao término do último episódio (opt.)
-  - [ ] Atualizar progresso do episódio periódicamente conforme o tempo
+  - [X] Atualizar progresso do episódio periódicamente conforme o tempo
   - [X] Mostrar tempo e duração do episódio
   - [X] Voltar ou retroceder no tempo do episódio ao interagir com o slider
   - [X] Mostrar título do episódio
