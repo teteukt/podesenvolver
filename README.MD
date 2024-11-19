@@ -27,9 +27,9 @@ Tecnologias utilizadas:
   - [X] Estado de erro
   - [X] Buscar RSS de um Podcast com sucesso e direcionar para tela de detalhe do podcast
   - [X] Persistir RSS do podcast no banco de dados em caso de busca com sucesso
-  - [ ] Histórico de URL usadas
-  - [ ] Limpar histórico
-  - [ ] Limpar registro de histórico
+  - [ ] Histórico de URL usadas (opt.)
+  - [ ] Limpar histórico (opt.)
+  - [ ] Limpar registro de histórico (opt.)
 - [X] Tela 2 - Detalhes do Podcast
   - [X] Estado de carregamento
   - [X] Estado de erro
@@ -49,8 +49,8 @@ Tecnologias utilizadas:
   - [X] Reproduzir episódio ao entrar na tela
   - [X] Reproduzir episódio ao tocar no botão de reprodução
   - [X] Pausar episódio ao tocar no botão de pausar
-  - [X] Reproduzir próximo episódio ao termino do episódio atual
-  - [X] Voltar ao episódio inicial do podcast ao término do último episódio
+  - [X] Reproduzir próximo episódio ao termino do episódio atual (opt.)
+  - [X] Voltar ao episódio inicial do podcast ao término do último episódio (opt.)
   - [ ] Atualizar progresso do episódio periódicamente conforme o tempo
   - [X] Mostrar tempo e duração do episódio
   - [X] Voltar ou retroceder no tempo do episódio ao interagir com o slider
