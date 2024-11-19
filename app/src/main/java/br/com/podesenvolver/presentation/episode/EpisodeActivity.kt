@@ -12,19 +12,27 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import br.com.podesenvolver.presentation.EXTRA_EPISODE_ID
+import br.com.podesenvolver.presentation.EXTRA_PODCAST_ID
 import br.com.podesenvolver.presentation.PodesenvolverTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EpisodeActivity : ComponentActivity() {
 
+    private val podcastId: Long? by lazy { intent?.extras?.getLong(EXTRA_PODCAST_ID) }
     private val episodeId: Long? by lazy { intent?.extras?.getLong(EXTRA_EPISODE_ID) }
     private val viewModel: EpisodeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val safeEpisodeId = episodeId
+        val safePodcastId = podcastId
 
         if (safeEpisodeId == null) {
+            finish()
+            return
+        }
+
+        if (safePodcastId == null) {
             finish()
             return
         }
@@ -43,15 +51,15 @@ class EpisodeActivity : ComponentActivity() {
                                 state = state,
                                 onPlay = { viewModel.playEpisode(it) },
                                 onPause = { viewModel.pauseEpisode() },
-                                onGoNext = {},
-                                onGoPrevious = {},
+                                onGoNext = { viewModel.seekToNextEpisode() },
+                                onGoPrevious = { viewModel.seekToPreviousEpisode() },
                                 onSeek = { viewModel.seekEpisodeTo(it) })
                         }
                     }
                 }
             }
 
-            viewModel.getEpisodeById(safeEpisodeId)
+            viewModel.getEpisodeById(safePodcastId, safeEpisodeId)
         }
     }
 }

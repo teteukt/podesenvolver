@@ -9,6 +9,7 @@ fun Context.intentPodcastDetail(podcastId: Long) = Intent(this, PodcastDetailAct
     putExtra(EXTRA_PODCAST_URL, podcastId)
 }
 
-fun Context.intentEpisode(episodeId: Long) = Intent(this, EpisodeActivity::class.java).apply {
+fun Context.intentEpisode(podcastId: Long, episodeId: Long) = Intent(this, EpisodeActivity::class.java).apply {
+    putExtra(EXTRA_PODCAST_ID, podcastId)
     putExtra(EXTRA_EPISODE_ID, episodeId)
 }

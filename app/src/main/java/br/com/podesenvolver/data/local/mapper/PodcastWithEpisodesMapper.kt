@@ -10,5 +10,6 @@ fun PodcastWithEpisodesEntity.toDomain(): Podcast =
         author = this.podcast.author,
         description = this.podcast.description,
         category = this.podcast.category,
-        episodes = this.episodes.map { it.toDomain() }
+        episodes = this.episodes.map { it.toDomain() },
+        cacheId = this.podcast.id,
     )

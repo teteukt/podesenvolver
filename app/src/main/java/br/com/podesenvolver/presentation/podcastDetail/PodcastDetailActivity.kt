@@ -37,7 +37,7 @@ class PodcastDetailActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(Modifier.padding(innerPadding)) {
                         PodcastDetailUI(state, onClickEpisode = {
-                            startActivity(intentEpisode(it.id))
+                            startActivity(intentEpisode(safePodcastId, it.id))
                         })
                     }
                 }

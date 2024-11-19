@@ -3,16 +3,18 @@ package br.com.podesenvolver.presentation.episode
 import androidx.annotation.OptIn
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.Player.STATE_ENDED
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.domain.Episode
+import br.com.podesenvolver.domain.Podcast
 import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -23,6 +25,8 @@ class EpisodeViewModel(
     private val exoPlayer: ExoPlayer
 ) : BaseViewModel() {
 
+    private lateinit var podcast: Podcast
+
     private var positionJob: Job? = null
 
     private val _state = MutableStateFlow<State>(State.Loading)
@@ -31,17 +35,28 @@ class EpisodeViewModel(
     private val _position = MutableStateFlow(0L)
     val position: StateFlow<Long> = _position
 
+    init {
+        exoPlayer.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+                if(playbackState == STATE_ENDED) {
+                    seekToNextEpisode()
+                }
+            }
+        })
+    }
+
     fun toggleTime() {
         positionJob?.run {
             positionJob?.cancel()
             positionJob = null
-        } ?: run {
-            positionJob = viewModelScope.launch {
-                initPositionTimer()
-                    .collect {
-                        _position.value = it
-                    }
-            }
+        }
+
+        positionJob = viewModelScope.launch {
+            initPositionTimer()
+                .collect {
+                    _position.value = it
+                }
         }
     }
 
@@ -52,11 +67,11 @@ class EpisodeViewModel(
         }
     }
 
-    fun getEpisodeById(id: Long) {
+    fun getEpisodeById(podcastId: Long, episodeId: Long) {
         _state.value = State.Loading
 
         launch {
-            repository.getEpisodeById(id)?.let {
+            repository.getPodcastById(podcastId)?.also { podcast = it }?.episodes?.find { it.id == episodeId }?.let {
                 prepareEpisode(it)
                 _position.value = 0
                 playEpisode(it)
@@ -93,6 +108,26 @@ class EpisodeViewModel(
 
     fun seekEpisodeTo(progress: Float) {
         exoPlayer.seekTo((exoPlayer.duration.toFloat() * progress).toLong())
+    }
+
+    fun seekToNextEpisode() {
+        (state.value as? State.WithEpisode)?.episode?.let {
+            podcast.episodes.getOrNull(it.index + 1)?.let { episode ->
+                getEpisodeById(podcast.cacheId, episode.id)
+            } ?: run {
+                getEpisodeById(podcast.cacheId, podcast.episodes.first().id)
+            }
+        }
+    }
+
+    fun seekToPreviousEpisode() {
+        (state.value as? State.WithEpisode)?.episode?.let {
+            podcast.episodes.getOrNull(it.index - 1)?.let { episode ->
+                getEpisodeById(podcast.cacheId, episode.id)
+            } ?: run {
+                getEpisodeById(podcast.cacheId, podcast.episodes.last().id)
+            }
+        }
     }
 
     sealed class State {

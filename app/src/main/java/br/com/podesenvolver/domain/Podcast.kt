@@ -6,5 +6,6 @@ data class Podcast(
     val imageUrl: String,
     val author: String,
     val description: String,
-    val category: String
+    val category: String,
+    val cacheId: Long = 0
 )
