@@ -33,7 +33,8 @@ fun PreviewUIWithEpisode() {
                             duration = ""
                         ),
                         playing = true,
-                        duration = 60000
+                        duration = 60000,
+                        imageUrl = ""
                     ),
                     onPlay = { },
                     onPause = { },

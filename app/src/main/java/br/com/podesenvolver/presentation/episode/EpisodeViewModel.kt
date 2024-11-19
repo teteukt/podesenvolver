@@ -96,7 +96,7 @@ class EpisodeViewModel(
     fun playEpisode(episode: Episode) {
         if (exoPlayer.isPlaying.not()) {
             exoPlayer.play()
-            _state.value = State.WithEpisode(episode, true, exoPlayer.duration)
+            _state.value = State.WithEpisode(podcast.imageUrl, episode, true, exoPlayer.duration)
         }
     }
 
@@ -104,7 +104,7 @@ class EpisodeViewModel(
         (state.value as? State.WithEpisode)?.let {
             if (it.playing) {
                 exoPlayer.pause()
-                _state.value = State.WithEpisode(it.episode, false, it.duration)
+                _state.value = State.WithEpisode(podcast.imageUrl, it.episode, false, it.duration)
             }
         }
     }
@@ -137,6 +137,7 @@ class EpisodeViewModel(
         data object Loading : State()
         data object NotFound : State()
         data class WithEpisode(
+            val imageUrl: String,
             val episode: Episode,
             val playing: Boolean,
             val duration: Long
