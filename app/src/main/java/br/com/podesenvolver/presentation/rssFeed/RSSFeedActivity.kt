@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -24,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RSSFeedActivity : ComponentActivity() {
 
-    val viewModel: RSSFeedViewModel by viewModel()
+    private val viewModel: RSSFeedViewModel by viewModel()
 
     @Composable
     private fun FetchErrorDialogAlert() {
@@ -43,14 +40,7 @@ class RSSFeedActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val state by viewModel.state.collectAsState()
-            var rssUrlText by remember { mutableStateOf("") }
-            var searchButtonEnabled by remember { mutableStateOf(true) }
-
-            LaunchedEffect(rssUrlText, state) {
-                searchButtonEnabled =
-                    rssUrlText.isNotBlank() || (state is RSSFeedViewModel.State.Loading).not()
-            }
+            val loading by remember { viewModel.fetchingPodcast }
 
             FetchErrorDialogAlert()
 
@@ -58,10 +48,8 @@ class RSSFeedActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                     Box(Modifier.padding(it)) {
                         RSSFeedUI(
-                            onSearch = { viewModel.fetchPodcast(rssUrlText) },
-                            searchButtonEnabled = searchButtonEnabled,
-                            rssUrlText = rssUrlText,
-                            onChangeRssUrlText = { rssUrlText = it }
+                            fetchingPodcast = loading,
+                            onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) },
                         )
                     }
                 }

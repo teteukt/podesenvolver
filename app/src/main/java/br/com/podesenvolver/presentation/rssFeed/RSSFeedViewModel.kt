@@ -8,8 +8,6 @@ import br.com.podesenvolver.R
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import br.com.podesenvolver.presentation.BaseViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 class RSSFeedViewModel(
     private val podcastRepository: PodcastRepository,
@@ -20,31 +18,26 @@ class RSSFeedViewModel(
     val foundPodcast: LiveData<Long?> = _foundPodcast
 
     val error = mutableStateOf<ErrorType?>(null)
-
-    private val _state = MutableStateFlow<State>(State.Initial)
-    val state: StateFlow<State> = _state
+    val fetchingPodcast = mutableStateOf(false)
 
     fun fetchPodcast(rssPodcastUrl: String) {
-        _state.value = State.Loading
+        fetchingPodcast.value = true
 
         launch(::handleGetPodcastError) {
             val podcast = podcastRepository.getPodcast(rssPodcastUrl)
             val podcastId = localPodcastRepository.savePodcast(podcast)
             _foundPodcast.postValue(podcastId)
+            fetchingPodcast.value = false
         }
     }
 
     private fun handleGetPodcastError(throwable: Throwable) {
-        _state.value = when (throwable) {
-            is IllegalArgumentException -> {
-                error.value = ErrorType.NotFound
-                State.Initial
-            }
-            else -> {
-                error.value = ErrorType.Generic
-                State.Initial
-            }
+        error.value = when (throwable) {
+            is IllegalArgumentException -> ErrorType.NotFound
+            else -> ErrorType.Generic
         }
+
+        fetchingPodcast.value = false
     }
 
     enum class ErrorType(
@@ -54,14 +47,10 @@ class RSSFeedViewModel(
         Generic(
             title = R.string.rss_feed_screen_title_generic_error,
             description = R.string.rss_feed_screen_message_generic_error
-        ), NotFound(
+        ),
+        NotFound(
             title = R.string.rss_feed_screen_title_not_found_error,
             description = R.string.rss_feed_screen_message_not_found_error
         )
-    }
-
-    sealed class State {
-        data object Initial : State()
-        data object Loading : State()
     }
 }

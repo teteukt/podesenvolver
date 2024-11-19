@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">podesenvolver</string>
+    <string name="app_name">Podesenvolver</string>
 
     <!--    Tela de buscar RSS-->
 
@@ -8,6 +8,8 @@
     <string name="rss_feed_screen_title_not_found_error">Conteúdo desconhecido</string>
     <string name="rss_feed_screen_message_not_found_error">O conteúdo entregue pela URL digitada é invalida ou não existe. Revise a URL e tente novamente</string>
     <string name="rss_feed_screen_search_button">Buscar</string>
+
+    <!--    Tela de detalhe do podcast-->
 
     <string name="episode_screen_error_title_not_found">Não encontrado.</string>
     <string name="episode_screen_error_description_not_found">O episódio requisitado não pôde ser encontrado ou não existe.</string>
