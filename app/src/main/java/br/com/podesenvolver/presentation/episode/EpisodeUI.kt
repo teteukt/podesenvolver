@@ -62,6 +62,7 @@ fun UIWithEpisode(
         Text(state.episode.title)
         TimerDurationText(positionDuration, state)
         PlayerControls(
+            positionDuration = positionDuration,
             playing = state.playing,
             onPlay = { onPlay(state.episode) },
             onPause = onPause,
@@ -73,7 +74,10 @@ fun UIWithEpisode(
 }
 
 @Composable
-fun TimerDurationText(positionDuration: EpisodeViewModel.PositionDuration, state: EpisodeViewModel.State.WithEpisode) {
+fun TimerDurationText(
+    positionDuration: EpisodeViewModel.PositionDuration,
+    state: EpisodeViewModel.State.WithEpisode
+) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(positionDuration.position.toTimeDisplayText())
         Text(positionDuration.duration.toTimeDisplayText())

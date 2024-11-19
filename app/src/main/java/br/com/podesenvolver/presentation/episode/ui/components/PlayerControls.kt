@@ -6,15 +6,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import br.com.podesenvolver.R
+import br.com.podesenvolver.presentation.episode.EpisodeViewModel
 
 @Composable
 fun PlayerControls(
+    positionDuration: EpisodeViewModel.PositionDuration,
     playing: Boolean,
     onPlay: () -> Unit,
     onPause: () -> Unit,
@@ -23,6 +26,10 @@ fun PlayerControls(
     onSeek: (progress: Float) -> Unit
 ) {
     var sliderValue by remember { mutableFloatStateOf(0F) }
+
+    LaunchedEffect(positionDuration) {
+        sliderValue = positionDuration.ratio()
+    }
 
     Column {
         Slider(

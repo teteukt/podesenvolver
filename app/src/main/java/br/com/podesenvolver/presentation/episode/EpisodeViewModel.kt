@@ -142,6 +142,6 @@ class EpisodeViewModel(
     }
 
     data class PositionDuration(val position: Long = 0, val duration: Long = 0) {
-        fun ratio() = (position.toFloat() / duration.toFloat())
+        fun ratio(): Float = (position.toFloat() / duration.toFloat()).takeIf { it > 0 } ?: 0F
     }
 }

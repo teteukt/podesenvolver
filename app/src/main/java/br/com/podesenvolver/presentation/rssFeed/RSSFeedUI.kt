@@ -35,7 +35,7 @@ import br.com.podesenvolver.presentation.Typography
 @Composable
 fun RSSFeedUI(
     fetchingPodcast: Boolean,
-    onSearch: (rssPodcastUrl: String) -> Unit,
+    onSearch: (rssPodcastUrl: String) -> Unit
 ) {
     var rssUrlText by remember { mutableStateOf("") }
     var searchButtonEnabled by remember { mutableStateOf(true) }
@@ -94,7 +94,7 @@ fun PreviewRSSFeedUI() {
             Box(Modifier.padding(it)) {
                 RSSFeedUI(
                     fetchingPodcast = false,
-                    onSearch = { },
+                    onSearch = { }
                 )
             }
         }

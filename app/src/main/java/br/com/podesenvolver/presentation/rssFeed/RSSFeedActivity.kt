@@ -49,7 +49,7 @@ class RSSFeedActivity : ComponentActivity() {
                     Box(Modifier.padding(it)) {
                         RSSFeedUI(
                             fetchingPodcast = loading,
-                            onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) },
+                            onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) }
                         )
                     }
                 }
