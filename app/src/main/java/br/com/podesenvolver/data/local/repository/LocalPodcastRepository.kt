@@ -8,4 +8,5 @@ interface LocalPodcastRepository {
     suspend fun getRecentPodcasts(): List<Podcast>
     suspend fun getPodcastById(id: Long): Podcast?
     suspend fun getEpisodeById(episodeId: Long): Episode?
+    suspend fun deletePodcastById(podcastId: Long)
 }

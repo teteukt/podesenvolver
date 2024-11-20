@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.podesenvolver.presentation.PodesenvolverTheme
 import br.com.podesenvolver.presentation.rssFeed.RSSFeedUI
+import br.com.podesenvolver.presentation.rssFeed.RSSFeedViewModel
 
 @Preview(showSystemUi = true)
 @Composable
@@ -18,7 +19,10 @@ fun PreviewRSSFeedUI() {
             Box(Modifier.padding(it)) {
                 RSSFeedUI(
                     fetchingPodcast = false,
-                    onSearch = { }
+                    onSearch = { },
+                    onClearPodcastFromHistory = {},
+                    lastPodcastsState = RSSFeedViewModel.LastPodcastState.Empty,
+                    onClickPodcastInHistory = {}
                 )
             }
         }

@@ -7,5 +7,6 @@ data class Podcast(
     val author: String,
     val description: String,
     val category: String,
-    val cacheId: Long = 0
+    val cacheId: Long = 0,
+    val rssUrl: String
 )
