@@ -38,7 +38,7 @@ fun RSSFeedUI(
 
     LaunchedEffect(rssUrlText, fetchingPodcast) {
         searchButtonEnabled =
-            rssUrlText.isNotBlank() || fetchingPodcast.not()
+            rssUrlText.isNotBlank() && fetchingPodcast.not()
     }
 
     Column(

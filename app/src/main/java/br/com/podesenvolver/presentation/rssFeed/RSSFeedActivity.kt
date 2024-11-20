@@ -40,7 +40,7 @@ class RSSFeedActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val loading by remember { viewModel.fetchingPodcast }
+            val fetchingPodcast by remember { viewModel.fetchingPodcast }
 
             FetchErrorDialogAlert()
 
@@ -48,7 +48,7 @@ class RSSFeedActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                     Box(Modifier.padding(it)) {
                         RSSFeedUI(
-                            fetchingPodcast = loading,
+                            fetchingPodcast = fetchingPodcast,
                             onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) }
                         )
                     }
