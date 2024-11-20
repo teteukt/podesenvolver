@@ -4,9 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,14 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import br.com.podesenvolver.R
+import br.com.podesenvolver.domain.Podcast
 import br.com.podesenvolver.presentation.SPACING_DEFAULT
 import br.com.podesenvolver.presentation.SPACING_MEDIUM
+import br.com.podesenvolver.presentation.SPACING_SMALL
 import br.com.podesenvolver.presentation.Typography
+import br.com.podesenvolver.presentation.rssFeed.ui.components.LastPodcastItem
 
 @Composable
 fun RSSFeedUI(
     fetchingPodcast: Boolean,
-    onSearch: (rssPodcastUrl: String) -> Unit
+    onSearch: (rssPodcastUrl: String) -> Unit,
+    lastPodcastsState: RSSFeedViewModel.LastPodcastState,
+    onClearPodcastFromHistory: (Podcast) -> Unit
 ) {
     var rssUrlText by remember { mutableStateOf("") }
     var searchButtonEnabled by remember { mutableStateOf(true) }
@@ -48,6 +56,7 @@ fun RSSFeedUI(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(Modifier.padding(top = SPACING_DEFAULT))
         Image(painterResource(R.drawable.podcast), "icone de microfone do podesenvolver")
         Spacer(Modifier.padding(vertical = SPACING_DEFAULT))
         Text(
@@ -58,6 +67,7 @@ fun RSSFeedUI(
         Text("Feed RSS para Podcasts Apple")
         Spacer(Modifier.padding(vertical = SPACING_DEFAULT))
         OutlinedTextField(
+            enabled = fetchingPodcast.not(),
             value = rssUrlText,
             onValueChange = { rssUrlText = it },
             modifier = Modifier.fillMaxWidth(),
@@ -79,5 +89,39 @@ fun RSSFeedUI(
             },
             enabled = searchButtonEnabled
         ) { Text(stringResource(R.string.rss_feed_screen_search_button)) }
+
+        Column(Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
+            when (lastPodcastsState) {
+                is RSSFeedViewModel.LastPodcastState.Loading -> LoadingLastPodcastList()
+                is RSSFeedViewModel.LastPodcastState.WithPodcasts -> LastPodcastList(
+                    lastPodcastsState.podcasts,
+                    onClearPodcastFromHistory
+                )
+
+                is RSSFeedViewModel.LastPodcastState.Empty -> EmptyLastPodcastList()
+            }
+        }
     }
+}
+
+@Composable
+fun LoadingLastPodcastList() {
+    Text(stringResource(R.string.rss_feed_screen_loading_last_podcasts))
+}
+
+@Composable
+fun EmptyLastPodcastList() {
+    Text(stringResource(R.string.rss_feed_screen_no_last_podcasts))
+}
+
+@Composable
+fun LastPodcastList(podcasts: List<Podcast>, onClearPodcast: (Podcast) -> Unit) {
+    Text(stringResource(R.string.rss_feed_screen_last_podcasts), style = Typography.titleMedium)
+    Spacer(Modifier.padding(vertical = SPACING_SMALL))
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+        items(podcasts) {
+            LastPodcastItem(it, onClickClear = onClearPodcast)
+        }
+    }
+    Spacer(Modifier.padding(vertical = SPACING_DEFAULT))
 }

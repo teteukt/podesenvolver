@@ -12,6 +12,9 @@
     <string name="rss_feed_screen_title_invalid_rss_error">Conteúdo desconhecido</string>
     <string name="rss_feed_screen_message_invalid_rss_error">O conteúdo entregue pela URL digitada é invalida ou não existe. Revise a URL e tente novamente.</string>
     <string name="rss_feed_screen_search_button">Buscar</string>
+    <string name="rss_feed_screen_last_podcasts">Últimos podcasts</string>
+    <string name="rss_feed_screen_loading_last_podcasts">Carregando histórico...</string>
+    <string name="rss_feed_screen_no_last_podcasts">Histórico de últimos podcasts vazio.</string>
 
     <!--    Tela de episode-->
 

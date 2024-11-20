@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,6 +42,7 @@ class RSSFeedActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val fetchingPodcast by remember { viewModel.fetchingPodcast }
+            val lastPodcastsState by viewModel.lastPodcasts.collectAsState()
 
             FetchErrorDialogAlert()
 
@@ -49,7 +51,9 @@ class RSSFeedActivity : ComponentActivity() {
                     Box(Modifier.padding(it)) {
                         RSSFeedUI(
                             fetchingPodcast = fetchingPodcast,
-                            onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) }
+                            onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) },
+                            lastPodcastsState = lastPodcastsState,
+                            onClearPodcastFromHistory = { viewModel.deletePodcastFromHistory(it) }
                         )
                     }
                 }
@@ -59,6 +63,11 @@ class RSSFeedActivity : ComponentActivity() {
         viewModel.foundPodcast.observe(this@RSSFeedActivity) { podcastId ->
             podcastId?.let { startPodcastDetailActivity(podcastId) }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchLastPodcasts()
     }
 
     private fun startPodcastDetailActivity(podcastId: Long) {

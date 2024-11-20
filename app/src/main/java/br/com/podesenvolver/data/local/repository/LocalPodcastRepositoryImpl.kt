@@ -49,4 +49,7 @@ class LocalPodcastRepositoryImpl(
 
     override suspend fun getEpisodeById(episodeId: Long): Episode? =
         appDatabase.getEpisodeDataAccessObject().getById(episodeId)?.toDomain()
+
+    override suspend fun deletePodcastById(podcastId: Long) =
+        appDatabase.getPodcastDataAccessObject().deleteById(podcastId)
 }
