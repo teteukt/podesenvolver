@@ -55,6 +55,10 @@ class RSSFeedActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         viewModel.foundPodcast.observe(this@RSSFeedActivity) { podcastId ->
             podcastId?.let { startPodcastDetailActivity(podcastId) }
