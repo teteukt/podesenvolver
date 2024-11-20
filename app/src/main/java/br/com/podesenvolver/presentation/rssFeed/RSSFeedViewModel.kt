@@ -12,6 +12,7 @@ import br.com.podesenvolver.presentation.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.xml.sax.SAXParseException
+import java.net.ConnectException
 
 class RSSFeedViewModel(
     private val podcastRepository: PodcastRepository,
@@ -57,7 +58,7 @@ class RSSFeedViewModel(
 
     private fun handleGetPodcastError(throwable: Throwable) {
         error.value = when (throwable) {
-            is SAXParseException -> ErrorType.InvalidRss
+            is SAXParseException, is ConnectException -> ErrorType.InvalidRss
             else -> ErrorType.Generic
         }
 
