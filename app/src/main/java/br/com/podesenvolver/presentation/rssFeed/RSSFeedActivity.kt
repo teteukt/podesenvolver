@@ -54,7 +54,7 @@ class RSSFeedActivity : ComponentActivity() {
                             onSearch = { rssUrl -> viewModel.fetchPodcast(rssUrl) },
                             lastPodcastsState = lastPodcastsState,
                             onClearPodcastFromHistory = { viewModel.deletePodcastFromHistory(it) },
-                            onClickPodcastInHistory = { viewModel.fetchPodcast(it.rssUrl) }
+                            onClickPodcastInHistory = { viewModel.selectPodcastFromHistory(it) }
                         )
                     }
                 }

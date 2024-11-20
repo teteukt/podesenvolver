@@ -38,6 +38,10 @@ class RSSFeedViewModel(
         }
     }
 
+    fun selectPodcastFromHistory(podcast: Podcast) {
+        _foundPodcast.postValue(podcast.cacheId)
+    }
+
     fun fetchPodcast(rssPodcastUrl: String) {
         fetchingPodcast.value = true
 

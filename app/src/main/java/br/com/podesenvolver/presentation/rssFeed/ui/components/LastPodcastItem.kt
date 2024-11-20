@@ -29,7 +29,7 @@ fun LastPodcastItem(podcast: Podcast, onClick: (Podcast) -> Unit, onClickClear: 
         Modifier
             .fillMaxWidth()
             .clickable { onClick(podcast) },
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             podcast.imageUrl,
