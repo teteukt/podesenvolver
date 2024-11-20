@@ -10,6 +10,6 @@ import br.com.podesenvolver.R
 @Composable
 fun AlertDialogActionError(onDismiss: () -> Unit, title: String, text: String) {
     AlertDialog(onDismissRequest = onDismiss, confirmButton = {
-        Button(onClick = onDismiss) { Text(stringResource(R.string.rss_feed_screen_search_button)) }
+        Button(onClick = onDismiss) { Text(stringResource(R.string.ok)) }
     }, title = { Text(title) }, text = { Text(text) })
 }

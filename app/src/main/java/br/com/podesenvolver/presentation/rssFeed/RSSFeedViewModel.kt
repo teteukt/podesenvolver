@@ -8,6 +8,7 @@ import br.com.podesenvolver.R
 import br.com.podesenvolver.data.local.repository.LocalPodcastRepository
 import br.com.podesenvolver.data.network.repository.PodcastRepository
 import br.com.podesenvolver.presentation.BaseViewModel
+import org.xml.sax.SAXParseException
 
 class RSSFeedViewModel(
     private val podcastRepository: PodcastRepository,
@@ -33,7 +34,7 @@ class RSSFeedViewModel(
 
     private fun handleGetPodcastError(throwable: Throwable) {
         error.value = when (throwable) {
-            is IllegalArgumentException -> ErrorType.NotFound
+            is SAXParseException -> ErrorType.InvalidRss
             else -> ErrorType.Generic
         }
 
@@ -48,9 +49,9 @@ class RSSFeedViewModel(
             title = R.string.rss_feed_screen_title_generic_error,
             description = R.string.rss_feed_screen_message_generic_error
         ),
-        NotFound(
-            title = R.string.rss_feed_screen_title_not_found_error,
-            description = R.string.rss_feed_screen_message_not_found_error
+        InvalidRss(
+            title = R.string.rss_feed_screen_title_invalid_rss_error,
+            description = R.string.rss_feed_screen_message_invalid_rss_error
         )
     }
 }

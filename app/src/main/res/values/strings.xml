@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">Podesenvolver</string>
 
+    <!--    Generics -->
+
+    <string name="ok">Entendi</string>
+
     <!--    Tela de buscar RSS-->
 
     <string name="rss_feed_screen_title_generic_error">Erro desconhecido</string>
-    <string name="rss_feed_screen_message_generic_error">Aconteceu um erro não previsto. Revise a URL e tente novamente</string>
-    <string name="rss_feed_screen_title_not_found_error">Conteúdo desconhecido</string>
-    <string name="rss_feed_screen_message_not_found_error">O conteúdo entregue pela URL digitada é invalida ou não existe. Revise a URL e tente novamente</string>
+    <string name="rss_feed_screen_message_generic_error">Aconteceu um erro não previsto. Revise a URL e tente novamente.</string>
+    <string name="rss_feed_screen_title_invalid_rss_error">Conteúdo desconhecido</string>
+    <string name="rss_feed_screen_message_invalid_rss_error">O conteúdo entregue pela URL digitada é invalida ou não existe. Revise a URL e tente novamente.</string>
     <string name="rss_feed_screen_search_button">Buscar</string>
 
     <!--    Tela de episode-->
