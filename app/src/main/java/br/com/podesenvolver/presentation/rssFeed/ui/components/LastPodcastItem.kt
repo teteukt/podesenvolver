@@ -1,5 +1,6 @@
 package br.com.podesenvolver.presentation.rssFeed.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,10 +24,12 @@ import br.com.podesenvolver.presentation.SPACING_SMALL
 import coil3.compose.AsyncImage
 
 @Composable
-fun LastPodcastItem(podcast: Podcast, onClickClear: (Podcast) -> Unit) {
+fun LastPodcastItem(podcast: Podcast, onClick: (Podcast) -> Unit, onClickClear: (Podcast) -> Unit) {
     Row(
-        Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        Modifier
+            .fillMaxWidth()
+            .clickable { onClick(podcast) },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
             podcast.imageUrl,

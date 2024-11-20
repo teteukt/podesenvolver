@@ -13,5 +13,6 @@ data class PodcastEntity(
     @ColumnInfo(name = "image_url") val imageUrl: String,
     @ColumnInfo(name = "author") val author: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "category") val category: String
+    @ColumnInfo(name = "category") val category: String,
+    @ColumnInfo(name = "rssUrl") val rssUrl: String,
 )

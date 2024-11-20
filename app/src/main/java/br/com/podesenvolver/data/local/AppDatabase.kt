@@ -8,7 +8,7 @@ import br.com.podesenvolver.data.local.dao.PodcastWithEpisodesDao
 import br.com.podesenvolver.data.local.entity.EpisodeEntity
 import br.com.podesenvolver.data.local.entity.PodcastEntity
 
-@Database(entities = [PodcastEntity::class, EpisodeEntity::class], version = 6)
+@Database(entities = [PodcastEntity::class, EpisodeEntity::class], version = 7)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getPodcastDataAccessObject(): PodcastDao
     abstract fun getEpisodeDataAccessObject(): EpisodeDao

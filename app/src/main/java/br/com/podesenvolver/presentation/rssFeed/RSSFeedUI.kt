@@ -39,7 +39,8 @@ fun RSSFeedUI(
     fetchingPodcast: Boolean,
     onSearch: (rssPodcastUrl: String) -> Unit,
     lastPodcastsState: RSSFeedViewModel.LastPodcastState,
-    onClearPodcastFromHistory: (Podcast) -> Unit
+    onClearPodcastFromHistory: (Podcast) -> Unit,
+    onClickPodcastInHistory: (Podcast) -> Unit
 ) {
     var rssUrlText by remember { mutableStateOf("") }
     var searchButtonEnabled by remember { mutableStateOf(true) }
@@ -95,6 +96,7 @@ fun RSSFeedUI(
                 is RSSFeedViewModel.LastPodcastState.Loading -> LoadingLastPodcastList()
                 is RSSFeedViewModel.LastPodcastState.WithPodcasts -> LastPodcastList(
                     lastPodcastsState.podcasts,
+                    onClickPodcastInHistory,
                     onClearPodcastFromHistory
                 )
 
@@ -115,12 +117,16 @@ fun EmptyLastPodcastList() {
 }
 
 @Composable
-fun LastPodcastList(podcasts: List<Podcast>, onClearPodcast: (Podcast) -> Unit) {
+fun LastPodcastList(
+    podcasts: List<Podcast>,
+    onClick: (Podcast) -> Unit,
+    onClearPodcast: (Podcast) -> Unit
+) {
     Text(stringResource(R.string.rss_feed_screen_last_podcasts), style = Typography.titleMedium)
     Spacer(Modifier.padding(vertical = SPACING_SMALL))
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(podcasts) {
-            LastPodcastItem(it, onClickClear = onClearPodcast)
+            LastPodcastItem(it, onClick = onClick, onClickClear = onClearPodcast)
         }
     }
     Spacer(Modifier.padding(vertical = SPACING_DEFAULT))

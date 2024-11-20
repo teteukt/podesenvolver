@@ -21,7 +21,8 @@ fun PreviewRSSFeedUI() {
                     fetchingPodcast = false,
                     onSearch = { },
                     onClearPodcastFromHistory = {},
-                    lastPodcastsState = RSSFeedViewModel.LastPodcastState.Empty
+                    lastPodcastsState = RSSFeedViewModel.LastPodcastState.Empty,
+                    onClickPodcastInHistory = {}
                 )
             }
         }

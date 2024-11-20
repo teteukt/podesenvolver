@@ -19,7 +19,8 @@ class LocalPodcastRepositoryImpl(
             imageUrl = podcast.imageUrl,
             author = podcast.author,
             description = podcast.description,
-            category = podcast.category
+            category = podcast.category,
+            rssUrl = podcast.rssUrl
         )
 
         val podcastEntityId = appDatabase.getPodcastDataAccessObject().insert(podcastEntity)
