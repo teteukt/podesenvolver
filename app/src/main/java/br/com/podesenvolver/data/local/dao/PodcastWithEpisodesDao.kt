@@ -9,7 +9,7 @@ import br.com.podesenvolver.data.local.entity.PodcastWithEpisodesEntity
 interface PodcastWithEpisodesDao {
 
     @Transaction
-    @Query("SELECT * FROM Podcast LIMIT 5")
+    @Query("SELECT * FROM Podcast ORDER BY created_at DESC LIMIT 5")
     suspend fun getRecent(): List<PodcastWithEpisodesEntity>
 
     @Transaction

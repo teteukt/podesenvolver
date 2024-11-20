@@ -15,4 +15,5 @@ data class PodcastEntity(
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "category") val category: String,
     @ColumnInfo(name = "rssUrl") val rssUrl: String,
+    @ColumnInfo(name = "created_at") val createdAt: Long
 )
