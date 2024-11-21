@@ -64,6 +64,7 @@ Tecnologias utilizadas:
 - [ ] Testes de ViewModel
 - [ ] Testes de UI
 - [ ] Testes de Repositório
+- [ ] Tratativa de erro em caso de falta de conexão com a internet
 
 ## Dificuldades
 
