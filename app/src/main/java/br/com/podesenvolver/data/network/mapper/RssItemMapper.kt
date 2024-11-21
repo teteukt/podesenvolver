@@ -6,7 +6,6 @@ import br.com.podesenvolver.extensions.toTimeDisplayText
 import tw.ktrssreader.kotlin.model.item.ITunesItemData
 
 fun ITunesItemData.toDomain(index: Int): Episode {
-
     val duration = this.duration.orEmpty()
 
     val formattedDuration = when {

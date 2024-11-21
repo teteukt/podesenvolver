@@ -65,7 +65,7 @@ private fun UIWithPodcast(podcast: Podcast, onClickEpisode: (Episode) -> Unit) {
             }
             Spacer(Modifier.padding(vertical = SPACING_SMALL))
             Text(podcast.category, style = Typography.bodySmall)
-            Text(stringResource(R.string.podcast_detail_episodes), style = Typography.titleMedium)
+            Text(stringResource(R.string.podcast_detail_episodes, podcast.getTotalDuration()), style = Typography.titleMedium)
         }
 
         Spacer(Modifier.padding(vertical = SPACING_SMALL))

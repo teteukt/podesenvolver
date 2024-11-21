@@ -23,6 +23,6 @@
 
     <!--    Tela de detalhe do podcast-->
 
-    <string name="podcast_detail_episodes">Episódios</string>
+    <string name="podcast_detail_episodes">Episódios - (%s)</string>
 
 </resources>

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextOverflow
 import br.com.podesenvolver.domain.Episode
+import br.com.podesenvolver.extensions.toTimeDisplayText
 import br.com.podesenvolver.presentation.Typography
 
 @Composable
@@ -23,7 +24,7 @@ fun UIPodcastEpisodeItem(episode: Episode, onClick: (Episode) -> Unit) {
                 onClick(episode)
             }
         ) {
-            Text("${episode.index + 1}. ${episode.title}", style = Typography.titleMedium)
+            Text("${episode.index + 1}. ${episode.title} - ${episode.getDurationInLong().toTimeDisplayText()}", style = Typography.titleMedium)
             Text(
                 AnnotatedString.fromHtml(
                     htmlString = episode.description,
