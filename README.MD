@@ -30,9 +30,9 @@ Tecnologias utilizadas:
   - [X] Estado de erro
   - [X] Buscar RSS de um Podcast com sucesso e direcionar para tela de detalhe do podcast
   - [X] Persistir RSS do podcast no banco de dados em caso de busca com sucesso
-  - [ ] Histórico de URL usadas (opt.)
+  - [X] Histórico de URL usadas (opt.)
   - [ ] Limpar histórico (opt.)
-  - [ ] Limpar registro de histórico (opt.)
+  - [X] Limpar registro de histórico (opt.)
 - [X] Tela 2 - Detalhes do Podcast
   - [X] Estado de carregamento
   - [X] Estado de erro
