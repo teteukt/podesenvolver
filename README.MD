@@ -41,7 +41,7 @@ Tecnologias utilizadas:
   - [X] Tela mostra imagem do podcast
   - [X] Tela mostra descrição do podcast
   - [X] Tela mostra autores do podcast
-  - [ ] Tela mostra duração do podcast
+  - [X] Tela mostra duração do podcast
   - [X] Tela mostra gênero do podcast
   - [X] Tela mostra episódios do podcast
   - [X] Redireciona para tela de Player do episódio
